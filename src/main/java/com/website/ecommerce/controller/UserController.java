@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(name = "/user")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -32,9 +31,18 @@ public class UserController {
         return new ResponseEntity<>(userService.createNewUser(user), HttpStatus.OK);
     }
 
-    @GetMapping("/v1/get/{id}")
-    public ResponseEntity<JSONObject> getUserById(@PathVariable("id") Long id) {
-        return null;
+    @GetMapping("/user/v1/get")
+    public ResponseEntity<JSONObject> getUserDemo() {
+        JSONObject demo = new JSONObject();
+        demo.put("data","User Logged in!");
+        return new ResponseEntity<>(demo,HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/v1/get")
+    public ResponseEntity<JSONObject> getAdminDemo() {
+        JSONObject demo = new JSONObject();
+        demo.put("data","Admin Logged in!");
+        return new ResponseEntity<>(demo,HttpStatus.OK);
     }
 
 }
