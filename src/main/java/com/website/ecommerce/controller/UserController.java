@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,6 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/user/v1/get")
+    @PreAuthorize("hasRole('user')")
     public ResponseEntity<JSONObject> getUserDemo() {
         JSONObject demo = new JSONObject();
         demo.put("data","User Logged in!");
@@ -39,6 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/v1/get")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<JSONObject> getAdminDemo() {
         JSONObject demo = new JSONObject();
         demo.put("data","Admin Logged in!");
