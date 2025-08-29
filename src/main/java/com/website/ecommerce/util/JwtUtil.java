@@ -32,7 +32,8 @@ public class JwtUtil {
     }
 
     private Claims getAllClaimsFromToken (String token) {
-        return Jwts.parser().setSigningKey(ecommercePropertyConfiguration.getJwtSecret())
+        String jwtSecret = ecommercePropertyConfiguration.getJwtSecret();
+        return Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes())).build()
                 .parseClaimsJws(token).getBody();
     }
 
