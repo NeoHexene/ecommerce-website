@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -31,6 +32,9 @@ public class UserService {
     @Autowired
     private EcommercePropertyConfiguration ecommercePropertyConfiguration;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private final JSONObject dataObject = new JSONObject();
     private final HashMap<String, Object> dataMap = new HashMap<>();
 
@@ -42,23 +46,41 @@ public class UserService {
         log.info("User List is empty: {}", userList.isEmpty());
         log.info("Role List is empty: {}", roleList.isEmpty());
         if (("true".equalsIgnoreCase(ecommercePropertyConfiguration.getCreateDefaultUser())) && (userList.isEmpty() || roleList.isEmpty() )) {
-            Role role = new Role();
-            role.setRoleId("admin");
-            role.setRoleName("Admin");
-            role.setRoleDescription("Administrator");
-            role.setAction("A");
-            roleRepository.save(role);
+            Role role1 = new Role();
+            role1.setRoleId("admin");
+            role1.setRoleName("Admin");
+            role1.setRoleDescription("Administrator");
+            role1.setAction("A");
+            roleRepository.save(role1);
 
-            User user = new User();
-            user.setUserName("defaultAdmin@123");
-            user.setAction("A");
-            user.setUserFirstName("Ani");
-            user.setUserLastName("K");
-            user.setUserPassword("admin");
-            Set<Role> userRoleSet = new HashSet<>();
-            userRoleSet.add(role);
-            user.setRoles(userRoleSet);
-            userRepository.save(user);
+            User user1 = new User();
+            user1.setUserName("defaultAdmin@123");
+            user1.setAction("A");
+            user1.setUserFirstName("Ani");
+            user1.setUserLastName("K");
+            user1.setUserPassword(getEncodedPassword("admin"));
+            Set<Role> userRoleSet1 = new HashSet<>();
+            userRoleSet1.add(role1);
+            user1.setRoles(userRoleSet1);
+            userRepository.save(user1);
+
+            Role role2 = new Role();
+            role2.setRoleId("user");
+            role2.setRoleName("User");
+            role2.setRoleDescription("User");
+            role2.setAction("A");
+            roleRepository.save(role2);
+
+            User user2 = new User();
+            user2.setUserName("defaultUser@123");
+            user2.setAction("A");
+            user2.setUserFirstName("Ani");
+            user2.setUserLastName("K");
+            user2.setUserPassword(getEncodedPassword("user"));
+            Set<Role> userRoleSet2 = new HashSet<>();
+            userRoleSet2.add(role2);
+            user2.setRoles(userRoleSet2);
+            userRepository.save(user2);
 
             log.info("Saved Default User and Role");
         }
@@ -75,5 +97,9 @@ public class UserService {
             log.error("Error occurred in createNewUser: {}", e);
         }
         return dataObject;
+    }
+
+    public String getEncodedPassword (String password) {
+        return passwordEncoder.encode(password);
     }
 }

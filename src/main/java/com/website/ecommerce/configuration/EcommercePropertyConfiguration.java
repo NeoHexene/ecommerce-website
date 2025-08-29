@@ -23,4 +23,10 @@ public class EcommercePropertyConfiguration {
 
     @Value("$(website.ecommerce.system)")
     private String system;
+
+    @Value("$(website.ecommerce.jwtExpiration)")
+    private String jwtExpiration;
+
+    @Value("$(website.ecommerce.jwtSecret)")
+    private String jwtSecret;
 }
