@@ -26,7 +26,7 @@ public class UserController {
         userService.createDefaultUser();
     }
 
-    @PostMapping(value = "/v1/create")
+    @PostMapping(value = "/user/v1/create")
     public ResponseEntity<JSONObject> createNewUser(@RequestBody User user) {
         log.info("Entering into createNewUser: {}",user);
         return new ResponseEntity<>(userService.createNewUser(user), HttpStatus.OK);
@@ -38,6 +38,14 @@ public class UserController {
         JSONObject demo = new JSONObject();
         demo.put("data","User Logged in!");
         return new ResponseEntity<>(demo,HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/admin/v1/create")
+    @PreAuthorize("hasRole('admin')")
+    //@PreAuthorize("hasAnyRole('admin','user')") will be used for checking multiple roles.
+    public ResponseEntity<JSONObject> createNewAdmin(@RequestBody User user) {
+        log.info("Entering into createNewAdmin: {}",user);
+        return new ResponseEntity<>(userService.createNewAdmin(user), HttpStatus.OK);
     }
 
     @GetMapping("/admin/v1/get")

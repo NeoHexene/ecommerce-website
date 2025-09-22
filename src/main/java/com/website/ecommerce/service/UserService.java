@@ -90,11 +90,28 @@ public class UserService {
     @SuppressWarnings("unchecked")
     public JSONObject createNewUser(User user) {
         try {
+            user.setUserPassword(getEncodedPassword(user.getUserPassword()));
+            user.setRoles(roleRepository.findByRoleIdAndAction("user","A"));
             userRepository.save(user);
             dataMap.put("User", user);
             dataObject.put("data", dataMap);
         } catch (Exception e) {
             log.error("Error occurred in createNewUser: {}", e);
+        }
+        return dataObject;
+    }
+
+    @Transactional
+    @SuppressWarnings("unchecked")
+    public JSONObject createNewAdmin(User user) {
+        try {
+            user.setUserPassword(getEncodedPassword(user.getUserPassword()));
+            user.setRoles(roleRepository.findByRoleIdAndAction("admin","A"));
+            userRepository.save(user);
+            dataMap.put("Admin", user);
+            dataObject.put("data", dataMap);
+        } catch (Exception e) {
+            log.error("Error occurred in createNewAdmin: {}", e);
         }
         return dataObject;
     }
