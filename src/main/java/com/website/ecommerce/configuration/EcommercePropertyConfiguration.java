@@ -29,4 +29,7 @@ public class EcommercePropertyConfiguration {
 
     @Value("$(website.ecommerce.jwtSecret)")
     private String jwtSecret;
+
+    @Value("$(website.ecommerce.allowedOrigins)" )
+    private String[] allowedOrigins;
 }

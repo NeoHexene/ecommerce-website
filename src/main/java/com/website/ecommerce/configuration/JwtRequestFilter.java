@@ -34,35 +34,37 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         final String header = request.getHeader("Authorization");
 
-        String token = null;
-        String username = null;
-
-        if (null != header && header.startsWith("Bearer ")) {
-            token = header.substring(7);
-
-            try {
-                username = jwtUtil.getUserNameFromToken(token);
-            } catch (IllegalArgumentException e) {
-                log.error("Unable to get jwt token: {}", e);
-            } catch (ExpiredJwtException e) {
-                log.error("Jwt token expired: {}", e);
-            }
-        } else {
-            log.error("Jwt token not starting with Bearer: {}",header);
+        // 1. Check if the header is present and correctly formatted
+        if (header == null || !header.startsWith("Bearer ")) {
+            // If not, continue the filter chain and stop processing for this filter
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        if (null != username && null == SecurityContextHolder.getContext().getAuthentication()) {
+        // 2. If the header is valid, proceed with token processing
+        String token = header.substring(7);
+        String username = null;
+
+        try {
+            username = jwtUtil.getUserNameFromToken(token);
+        } catch (IllegalArgumentException e) {
+            log.error("Unable to get JWT token", e);
+        } catch (ExpiredJwtException e) {
+            log.warn("JWT token has expired", e); // Use WARN for expired tokens, it's not a system error
+        }
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = jwtService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null,
-                                userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                UsernamePasswordAuthenticationToken authenticationToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
-        filterChain.doFilter(request,response);
+
+        // Continue the filter chain for the next filter
+        filterChain.doFilter(request, response);
     }
 }
