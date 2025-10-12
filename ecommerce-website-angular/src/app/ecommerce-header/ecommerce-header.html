@@ -1,0 +1,37 @@
+<mat-toolbar class="app-header-component" color="primary">
+  <span class="mat-headline">Ecommerce Application</span>
+  <span class="spacer"></span>
+  <button *ngIf="!isLoggedIn()" mat-raised-button color="accent" routerLink="/login">Login</button>
+  <button *ngIf="isLoggedIn()" mat-raised-button color="warn" (click)="logout()">Logout</button>
+</mat-toolbar>
+
+
+
+
+
+
+
+
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/home">Ecommerce</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="userAuthService.roleMatch(['admin'])" class="nav-link" routerLink="/admin" routerLinkActive="active">Admin Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="userAuthService.roleMatch(['user'])" class="nav-link" routerLink="/user" routerLinkActive="active">User Dashboard</a>
+        </li>
+      </ul>
+      <a *ngIf="!isLoggedIn()" class="btn btn-success me-2" routerLink="/login" role="button">Login</a>
+      <a *ngIf="isLoggedIn()" class="btn btn-danger me-2" (click)="logout()" role="button">Logout</a>
+    </div>
+  </div>
+</nav> -->
