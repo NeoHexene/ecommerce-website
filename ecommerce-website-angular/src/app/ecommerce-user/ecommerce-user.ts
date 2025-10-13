@@ -6,8 +6,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-ecommerce-user',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './ecommerce-user.html',
-  styleUrl: './ecommerce-user.css'
+  templateUrl: './ecommerce-user.html'
 })
 export class EcommerceUser implements OnInit {
 

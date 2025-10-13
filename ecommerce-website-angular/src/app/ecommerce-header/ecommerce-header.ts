@@ -17,8 +17,7 @@ import { MatInputModule } from '@angular/material/input';
      MatFormFieldModule, 
      MatInputModule
     ],
-  templateUrl: './ecommerce-header.html',
-  styleUrl: './ecommerce-header.css'
+  templateUrl: './ecommerce-header.html'
 })
 export class EcommerceHeader implements OnInit {
 

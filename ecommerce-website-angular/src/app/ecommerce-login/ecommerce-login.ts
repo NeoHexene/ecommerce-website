@@ -14,8 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule
   ],
-  templateUrl: './ecommerce-login.html',
-  styleUrl: './ecommerce-login.css'
+  templateUrl: './ecommerce-login.html'
 })
 export class EcommerceLogin implements OnInit {
 
