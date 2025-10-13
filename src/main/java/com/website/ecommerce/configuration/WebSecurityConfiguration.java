@@ -30,9 +30,6 @@ public class WebSecurityConfiguration {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    @Autowired
-    private UserDetailsService jwtService;
-
     @Bean
     public AuthenticationManager authenticationManagerBean
             (AuthenticationConfiguration authenticationConfiguration)
