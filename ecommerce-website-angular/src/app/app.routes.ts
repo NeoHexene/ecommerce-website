@@ -5,6 +5,7 @@ import { EcommerceUser } from './ecommerce-user/ecommerce-user';
 import { EcommerceLogin } from './ecommerce-login/ecommerce-login';
 import { EcommerceForbidden } from './ecommerce-forbidden/ecommerce-forbidden';
 import { AuthGuard } from './_auth/auth.guard';
+import { EcommerceAddNewProduct } from './ecommerce-add-new-product/ecommerce-add-new-product';
 
 export const routes: Routes = [
     { path: '',  component: EcommerceHome },
@@ -12,5 +13,8 @@ export const routes: Routes = [
     { path: 'user', component: EcommerceUser, canActivate: [AuthGuard], data: { roles: ['user'] } },
     { path: 'login', component: EcommerceLogin },
     { path: 'forbidden', component: EcommerceForbidden },
-    { path: '**', redirectTo: '/home' }  // Wildcard route for undefined routes
+    { path: 'add-new-product', component: EcommerceAddNewProduct, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+
+
+    { path: '**', redirectTo: '/' }
 ];

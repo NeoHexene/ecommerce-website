@@ -38,6 +38,14 @@ export class EcommerceUserAuthService {
     return false;
   }
 
+  public isAdmin(): boolean {
+    return this.roleMatch(['admin']);
+  }
+
+  public isUser(): boolean {
+    return this.roleMatch(['user']);
+  }
+
   public clear() {
     localStorage.clear();
   }

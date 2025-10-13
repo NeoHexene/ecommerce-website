@@ -7,9 +7,9 @@ import { EcommerceUserAuthService } from './ecommerce-user-auth-service';
   providedIn: 'root'
 })
 export class EcommerceUserService {
-  private BASE_URL = 'http://localhost:8080';
-  private BASE_USER_URL = '/ecommerce/user';
-  private BASE_ADMIN_URL = '/ecommerce/admin';
+  private BASE_URL = 'http://localhost:8080/ecommerce';
+  private BASE_USER_URL = '/user';
+  private BASE_ADMIN_URL = '/admin';
 
   requestHeader = new HttpHeaders( { "No-Auth": "True" } );
 
@@ -18,7 +18,7 @@ export class EcommerceUserService {
   ) { }
 
   login(loginData: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.BASE_URL}/ecommerce/jwt/v1/create`, loginData, { headers: this.requestHeader});
+    return this.http.post(`${this.BASE_URL}/ecommerce/jwt/v1/create`, loginData, { headers: this.requestHeader });
   }
 
   // Example method to get user profile
@@ -29,4 +29,5 @@ export class EcommerceUserService {
   getAdminProfile(): Observable<any> {
     return this.http.get(`${this.BASE_URL}${this.BASE_ADMIN_URL}/v1/get`);
   }
+
 }

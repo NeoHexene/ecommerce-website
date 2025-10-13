@@ -28,6 +28,7 @@ export class EcommerceHeader implements OnInit {
   ) { };
 
   ngOnInit(): void {
+    console.clear();
   }
 
   isLoggedIn(): boolean {
