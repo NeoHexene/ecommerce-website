@@ -7,6 +7,7 @@ import { EcommerceProductService } from '../_services/ecommerce-product-service'
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
+import { Drag } from '../drag';
 
 @Component({
   selector: 'app-ecommerce-add-new-product',
@@ -15,7 +16,8 @@ import { CommonModule } from '@angular/common';
     MatInputModule, 
     MatButtonModule,
     FormsModule,
-    MatGridListModule
+    MatGridListModule,
+    Drag
   ],
   templateUrl: './ecommerce-add-new-product.html'
 })
@@ -30,10 +32,10 @@ export class EcommerceAddNewProduct implements OnInit {
 
   ngOnInit(): void {
     console.clear();
+    this.productImagesList = [];
   }
 
   onFileSelection(event: any) {
-    this.productImagesList = [];
     if(event.target.files) {
       const filesArray: File[] = Array.from(event.target.files);
       filesArray.forEach((file: any) => {
@@ -46,6 +48,10 @@ export class EcommerceAddNewProduct implements OnInit {
         this.productImagesList.push(obj);
       });
     }
+  }
+
+  dragAndDropFiles(event: any) {
+    this.productImagesList = event;
   }
 
   removeSelectedFile(index: number) {
@@ -71,6 +77,7 @@ export class EcommerceAddNewProduct implements OnInit {
           console.log("Response: ", response);
           form.reset();
           this.readonly = false;
+          this.productImagesList = [];
         },
         error: (error) => {
           console.log("Error: ", error);

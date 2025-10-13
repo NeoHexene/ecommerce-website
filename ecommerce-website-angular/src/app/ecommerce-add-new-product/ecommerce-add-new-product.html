@@ -51,7 +51,7 @@
                 <!-- image area -->
                 <div class="col-6">
                     <div>
-                        <div class="image-drag-n-drop-area">
+                        <div class="image-drag-n-drop-area" appDrag (fileEvent)="dragAndDropFiles($event)">
                             <div class="image-text-wrapper">
                                 Drag and drop your file or
                                 <a class="image-browse-button" (click)="selectFile.click()">browse</a>
