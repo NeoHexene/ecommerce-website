@@ -18,7 +18,7 @@ export class EcommerceUserService {
   ) { }
 
   login(loginData: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.BASE_URL}/ecommerce/jwt/v1/create`, loginData, { headers: this.requestHeader });
+    return this.http.post(`${this.BASE_URL}/jwt/v1/create`, loginData, { headers: this.requestHeader });
   }
 
   // Example method to get user profile
