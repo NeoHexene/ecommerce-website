@@ -50,7 +50,28 @@
 
                 <!-- image area -->
                 <div class="col-6">
-
+                    <div>
+                        <div class="image-drag-n-drop-area">
+                            <div class="image-text-wrapper">
+                                Drag and drop your file or
+                                <a class="image-browse-button" (click)="selectFile.click()">browse</a>
+                                a file
+                            </div>
+                        </div>
+                        <input type="file" style="display: none;" multiple value="select" #selectFile (change)="onFileSelection($event)">
+                    </div>
+                    <div class="mt-5">
+                        <div class="row">
+                            <mat-grid-list cols="4" rowHeight="1:1">
+                                <mat-grid-tile class="mat-grid-tile" *ngFor="let file of productImagesList; let i = index;">
+                                    <div style="position: relative">
+                                        <span class="remove-image-button" (click)="removeSelectedFile(i)">x</span>
+                                        <img [src]="file.url" width="100px" height="100px">
+                                    </div>
+                                </mat-grid-tile>
+                            </mat-grid-list>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

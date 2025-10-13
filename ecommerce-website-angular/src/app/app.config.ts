@@ -6,6 +6,7 @@ import { authInterceptor } from './_auth/auth.interceptor';
 import { EcommerceUserService } from './_services/ecommerce-user-service';
 
 import { routes } from './app.routes';
+import { EcommerceProductService } from './_services/ecommerce-product-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,8 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withInterceptors([authInterceptor])
-    ),
-    AuthGuard,
-    EcommerceUserService
+    )
   ]
 };

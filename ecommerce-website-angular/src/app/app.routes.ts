@@ -14,7 +14,5 @@ export const routes: Routes = [
     { path: 'login', component: EcommerceLogin },
     { path: 'forbidden', component: EcommerceForbidden },
     { path: 'add-new-product', component: EcommerceAddNewProduct, canActivate: [AuthGuard], data: { roles: ['admin'] } },
-
-
-    { path: '**', redirectTo: '/' }
+    // { path: '**', redirectTo: '/' }
 ];
