@@ -30,7 +30,7 @@ public class RoleService {
             dataMap.put("Role", role);
             dataObject.put("data",dataMap);
         } catch (Exception e) {
-            log.error("Error occurred in createNewUser:{}",e);
+            log.error("Error occurred in createNewRole:{}",e);
         }
         return dataObject;
     }

@@ -44,7 +44,7 @@ public class User {
 
     private String updatedBy;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "ecommerce_user_role_mapping",
             joinColumns = {
                     @JoinColumn(name = "user_id")
