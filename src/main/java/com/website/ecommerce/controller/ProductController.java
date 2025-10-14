@@ -33,5 +33,13 @@ public class ProductController {
         return new ResponseEntity<>(productService.createNewProduct(product), HttpStatus.OK);
     }
 
+    @GetMapping("/v1/get-all")
+    public ResponseEntity<JSONObject> getAllProducts() {
+        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
+    }
 
+    @DeleteMapping("/v1/delete/{id}")
+    public void deleteProductDetailsById(@PathVariable("id") Long id) {
+        productService.deleteProductDetailsById(id);
+    }
 }

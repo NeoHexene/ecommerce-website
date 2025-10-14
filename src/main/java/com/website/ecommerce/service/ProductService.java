@@ -25,23 +25,21 @@ public class ProductService {
     @Transactional
     @SuppressWarnings("unchecked")
     public JSONObject createNewProduct(Product product) {
-        try {
-            productRepository.save(product);
-            dataObject.put("data", product);
-        } catch (Exception e) {
-            log.error("Error occurred in createNewProduct:{}", e);
-        }
+        log.info("Entering into createNewProduct: {}", product);
+        productRepository.save(product);
+        dataObject.put("data", product);
         return dataObject;
     }
 
     @SuppressWarnings("unchecked")
     public JSONObject getAllProducts() {
-        try {
-            List<Product> productList = productRepository.findAll();
-            dataObject.put("data", productList);
-        } catch (Exception e) {
-            log.error("Error occurred in getAllProducts:{}", e);
-        }
+        List<Product> productList = productRepository.findAll();
+        dataObject.put("data", productList);
         return dataObject;
+    }
+
+    public void deleteProductDetailsById(Long id) {
+        log.info("Entering deleteProductDetails: {}", id);
+        productRepository.deleteById(id);
     }
 }

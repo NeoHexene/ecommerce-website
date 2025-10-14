@@ -26,7 +26,7 @@ public class Product {
 
     private Double productActualPrice;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "ecommerce_product_image_mapping",
     joinColumns = { @JoinColumn(name = "product_id") },
     inverseJoinColumns = { @JoinColumn(name = "image_id") } )
