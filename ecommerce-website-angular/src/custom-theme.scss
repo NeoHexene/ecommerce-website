@@ -6,14 +6,12 @@
 @use '@angular/material' as mat;
 
 html {
-  @include mat.theme((
-    color: (
-      primary: mat.$magenta-palette,
-      tertiary: mat.$violet-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  @include mat.theme((color: (primary: mat.$magenta-palette,
+        tertiary: mat.$violet-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
 }
 
 body {
@@ -36,9 +34,10 @@ body {
 .mat-toolbar[color="primary"] {
   background: var(--mat-sys-primary);
   color: var(--mat-sys-on-primary);
-    
-    .mat-mdc-raised-button.mat-accent {
-        background-color: var(--mat-sys-accent);
-        color: var(--mat-sys-on-accent);
-    }
+
+  .mat-mdc-raised-button.mat-accent {
+    background-color: var(--mat-sys-accent);
+    color: var(--mat-sys-on-accent);
+  }
+
 }

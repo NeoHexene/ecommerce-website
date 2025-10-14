@@ -18,7 +18,11 @@ export class EcommerceProductService {
   }
 
   public getAllProducts(): Observable<any> {
-    return this.http.get(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/get-all`)
+    return this.http.get(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/get-all`);
+  }
+
+  public deleteProductDetailsById(id: number) {
+    return this.http.delete(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/delete/${id}`);
   }
   
 }
