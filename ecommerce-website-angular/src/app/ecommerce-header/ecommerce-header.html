@@ -7,9 +7,14 @@
     <button *ngIf="isLoggedIn()" mat-raised-button color="warn" (click)="logout()">Logout</button>
   </mat-toolbar>
 
-  <mat-toolbar *ngIf="isLoggedIn()" color="primary">
+  <mat-toolbar *ngIf="isLoggedIn() && userAuthService.isAdmin()" color="primary">
     <button mat-raised-button color="accent" routerLink="/">Home</button>
-    <button *ngIf="userAuthService.isAdmin()" mat-raised-button color="accent" routerLink="/add-new-product">Add Product</button>
+    <button mat-raised-button color="accent" routerLink="/add-new-product">Add Product</button>
+    <button mat-raised-button color="accent" routerLink="/show-product-details">All Product Details</button>
+  </mat-toolbar>
+
+  <mat-toolbar *ngIf="isLoggedIn() && userAuthService.isUser()" color="primary">
+    <button mat-raised-button color="accent" routerLink="/">Home</button>
   </mat-toolbar>
 
 </div>

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { EcommerceUserAuthService } from './ecommerce-user-auth-service';
 
 @Injectable({
   providedIn: 'root'

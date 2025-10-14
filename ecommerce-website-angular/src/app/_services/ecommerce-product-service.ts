@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,12 @@ export class EcommerceProductService {
     private http: HttpClient
   ) { }
 
-  saveProduct(formData: FormData) {
+  public saveProduct(formData: FormData): Observable<any>{
     return this.http.post(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/create`, formData);
+  }
+
+  public getAllProducts(): Observable<any> {
+    return this.http.get(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/get-all`)
   }
   
 }

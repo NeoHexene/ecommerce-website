@@ -37,16 +37,16 @@ export class EcommerceLogin implements OnInit {
         next: (response) => {
           console.log('Response: ', response);
           this.readonly = false;
-          if (response && response.data && response.data.JwtResponse && response.data.JwtResponse.jwtToken) {
-            this.userAuthService.setToken(response.data.JwtResponse.jwtToken);
-            if (response.data.JwtResponse.user.roles) {
-              this.userAuthService.setRoles(response.data.JwtResponse.user.roles);
-              if (response.data.JwtResponse.user.roles[0].roleId.includes("admin")) {
+          if (response && response.data && response.data.jwtToken) {
+            this.userAuthService.setToken(response.data.jwtToken);
+            if (response.data.user.roles) {
+              this.userAuthService.setRoles(response.data.user.roles);
+              if (response.data.user.roles[0].roleId.includes("admin")) {
                 this.router.navigate(["/admin"]);
-              } else if (response.data.JwtResponse.user.roles[0].roleId.includes("user"))  {
+              } else if (response.data.user.roles[0].roleId.includes("user"))  {
                 this.router.navigate(["/user"]);
               } else {
-                this.router.navigate(["/home"]);
+                this.router.navigate(["/"]);
               }
             }
           }

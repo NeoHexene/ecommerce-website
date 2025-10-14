@@ -20,15 +20,13 @@ public class RoleService {
     private RoleRepository roleRepository;
 
     private final JSONObject dataObject = new JSONObject();
-    private final HashMap<String, Object> dataMap = new HashMap<>();
 
     @Transactional
     @SuppressWarnings("unchecked")
     public JSONObject createNewRole(Role role) {
         try {
             roleRepository.save(role);
-            dataMap.put("Role", role);
-            dataObject.put("data",dataMap);
+            dataObject.put("data",role);
         } catch (Exception e) {
             log.error("Error occurred in createNewRole:{}",e);
         }

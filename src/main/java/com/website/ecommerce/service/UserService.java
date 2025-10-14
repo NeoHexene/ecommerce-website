@@ -36,7 +36,6 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     private final JSONObject dataObject = new JSONObject();
-    private final HashMap<String, Object> dataMap = new HashMap<>();
 
     @Transactional
     public void createDefaultUser() {
@@ -93,8 +92,7 @@ public class UserService {
             user.setUserPassword(getEncodedPassword(user.getUserPassword()));
             user.setRoles(roleRepository.findByRoleIdAndAction("user","A"));
             userRepository.save(user);
-            dataMap.put("User", user);
-            dataObject.put("data", dataMap);
+            dataObject.put("data", user);
         } catch (Exception e) {
             log.error("Error occurred in createNewUser: {}", e);
         }
@@ -108,8 +106,7 @@ public class UserService {
             user.setUserPassword(getEncodedPassword(user.getUserPassword()));
             user.setRoles(roleRepository.findByRoleIdAndAction("admin","A"));
             userRepository.save(user);
-            dataMap.put("Admin", user);
-            dataObject.put("data", dataMap);
+            dataObject.put("data", user);
         } catch (Exception e) {
             log.error("Error occurred in createNewAdmin: {}", e);
         }

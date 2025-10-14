@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +20,27 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     private final JSONObject dataObject = new JSONObject();
-    private final HashMap<String, Object> dataMap = new HashMap<>();
+//    private final HashMap<String, Object> dataMap = new HashMap<>();
 
     @Transactional
     @SuppressWarnings("unchecked")
     public JSONObject createNewProduct(Product product) {
         try {
             productRepository.save(product);
-            dataMap.put("Product", product);
-            dataObject.put("data",dataMap);
+            dataObject.put("data", product);
         } catch (Exception e) {
-            log.error("Error occurred in createNewProduct:{}",e);
+            log.error("Error occurred in createNewProduct:{}", e);
+        }
+        return dataObject;
+    }
+
+    @SuppressWarnings("unchecked")
+    public JSONObject getAllProducts() {
+        try {
+            List<Product> productList = productRepository.findAll();
+            dataObject.put("data", productList);
+        } catch (Exception e) {
+            log.error("Error occurred in getAllProducts:{}", e);
         }
         return dataObject;
     }

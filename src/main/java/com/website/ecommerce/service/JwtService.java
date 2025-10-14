@@ -33,7 +33,6 @@ public class JwtService implements UserDetailsService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    private final HashMap<String, Object> dataMap = new HashMap<>();
     private final JSONObject dataObject = new JSONObject();
 
     @SuppressWarnings("unchecked")
@@ -48,8 +47,7 @@ public class JwtService implements UserDetailsService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             JwtResponseDto jwtResponseDto = new JwtResponseDto(user, generatedToken);
-            dataMap.put("JwtResponse", jwtResponseDto);
-            dataObject.put("data", dataMap);
+            dataObject.put("data", jwtResponseDto);
             return  dataObject;
         } else {
             throw new Exception("User not found in database.");

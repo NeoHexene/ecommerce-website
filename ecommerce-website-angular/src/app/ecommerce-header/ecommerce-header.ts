@@ -10,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-ecommerce-header',
   imports: [RouterLink,
-     RouterLinkActive, 
      CommonModule, 
      MatToolbarModule, 
      MatButtonModule, 
