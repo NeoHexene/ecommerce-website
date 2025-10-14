@@ -1,0 +1,42 @@
+<div class="app-ecommerce-show-product-details">
+    <div class="container mt-5">
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        
+          <ng-container matColumnDef="ID">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.productDescription}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="Discounted Price">
+            <th mat-header-cell *matHeaderCellDef> Discounted Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.productDiscountedPrice}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="Actual Price">
+            <th mat-header-cell *matHeaderCellDef> Actual Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.productActualPrice}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons aria-label="Select page of products">
+        </mat-paginator>
+
+    </div>
+    
+</div>
+
