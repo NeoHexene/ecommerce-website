@@ -2,16 +2,21 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EcommerceProductService } from '../_services/ecommerce-product-service';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EcommerceDisplayProductImages } from '../ecommerce-display-product-images/ecommerce-display-product-images';
+import { EcommerceImageProcessingService } from '../_services/ecommerce-image-processing-service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-ecommerce-show-product-details',
   imports: [
     MatTableModule,
     CommonModule,
-    MatPaginator,
-    MatIconModule
+    MatPaginatorModule,
+    MatIconModule,
+    MatDialogModule
   ],
   templateUrl: './ecommerce-show-product-details.html'
 })
@@ -19,10 +24,12 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['ID', 'Name', 'Description', 'Discounted Price', 'Actual Price', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['ID', 'Name', 'Description', 'Discounted Price', 'Actual Price', 'Images', 'Edit', 'Delete'];
   dataSource = new MatTableDataSource<any>([]);
 
-  constructor(private productService: EcommerceProductService
+  constructor(private productService: EcommerceProductService,
+    private imagesDialog: MatDialog,
+    private imageProcessingService: EcommerceImageProcessingService
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +42,16 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
   }
 
   getAllProductDetails() {
-    this.productService.getAllProducts().subscribe({
+    this.productService.getAllProducts().pipe(
+      map((response: any) => {
+        if (response && response.data) {
+          response.data = response.data.map((product: any) =>
+            this.imageProcessingService.createImages(product)
+          );
+        }
+        return response;
+      })
+    ).subscribe({
       next: (response) => {
         console.log("Response: ", response)
         if (response && response.data) {
@@ -66,7 +82,17 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
   }
 
   editProductDetails(element: any) {
+    
+  }
 
+  showProductImages(element: any) {
+    this.imagesDialog.open(EcommerceDisplayProductImages, {
+      height: '500px',
+      width: '800px',
+      data: {
+        images: element.productImages
+      }
+    });
   }
 
 }

@@ -8,8 +8,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .app-ecommerce-add-new-product {
-    .mat-grid-tile {
-        border: 1px solid #eee;
+    .show-images {
+        width: 100px;
+        height: 100px;
     }
 
     .remove-image-button {
@@ -46,5 +47,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .image-browse-button {
         color: blue;
         cursor: pointer;
+    }
+}
+
+.app-ecommerce-display-product-images {
+    .show-images-grid {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+
+    .show-images {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
     }
 }

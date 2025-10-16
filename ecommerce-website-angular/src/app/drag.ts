@@ -33,7 +33,7 @@ export class Drag {
     event.preventDefault();
     event.stopPropagation();
     this.background = "#eee";
-
+    this.productImagesList = [];
     if(event.dataTransfer && event.dataTransfer.files.length > 0) {
       const filesArray: File[] = Array.from(event.dataTransfer.files);
       filesArray.forEach((file: any) => {

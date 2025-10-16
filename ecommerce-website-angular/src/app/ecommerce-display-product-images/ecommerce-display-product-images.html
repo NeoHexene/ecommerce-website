@@ -1,0 +1,11 @@
+<div class="app-ecommerce-display-product-images">
+  <div class="container">
+    <h1 mat-dialog-title>Product Images</h1>
+    <mat-grid-list cols="4" rowHeight="1:1" class="show-images-grid">
+      <mat-grid-tile *ngFor="let image of data.images">
+        <img [src]="image.url" class="show-images">
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+</div>

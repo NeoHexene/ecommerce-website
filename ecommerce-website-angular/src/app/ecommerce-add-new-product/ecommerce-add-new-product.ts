@@ -75,14 +75,14 @@ export class EcommerceAddNewProduct implements OnInit {
       this.productService.saveProduct(formData).subscribe({
         next:(response) => {
           console.log("Response: ", response);
-          form.reset();
           this.readonly = false;
+          form.reset();
           this.productImagesList = [];
         },
         error: (error) => {
           console.log("Error: ", error);
-          alert('Error occurred while saving product: ' + (error.error?.message || 'Please try again'));
           this.readonly = false;
+          alert('Error occurred while saving product: ' + (error.error?.message || 'Please try again'));
         }
       });
     }

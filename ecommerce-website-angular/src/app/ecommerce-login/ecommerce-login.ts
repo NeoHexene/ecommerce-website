@@ -35,8 +35,8 @@ export class EcommerceLogin implements OnInit {
       this.readonly = true;
       this.userService.login(form.value).subscribe({
         next: (response) => {
-          console.log('Response: ', response);
           this.readonly = false;
+          console.log('Response: ', response);
           if (response && response.data && response.data.jwtToken) {
             this.userAuthService.setToken(response.data.jwtToken);
             if (response.data.user.roles) {
@@ -52,9 +52,9 @@ export class EcommerceLogin implements OnInit {
           }
         },
         error: (error) => {
+          this.readonly = false;
           console.error('Error: ', error);
           alert('Login failed: ' + (error.error?.message || 'Please try again'));
-          this.readonly = false;
         }
       });
     }

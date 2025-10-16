@@ -1,5 +1,6 @@
 <div class="app-ecommerce-add-new-product">
     <div class="container mt-5">
+        <h1 mat-dialog-title>Add Product</h1>
         <div class="card p-2">
             <div class="row">
                 <!-- product form -->
@@ -66,7 +67,7 @@
                                 <mat-grid-tile class="mat-grid-tile" *ngFor="let file of productImagesList; let i = index;">
                                     <div style="position: relative">
                                         <span class="remove-image-button" (click)="removeSelectedFile(i)">x</span>
-                                        <img [src]="file.url" width="100px" height="100px">
+                                        <img [src]="file.url" class="show-images">
                                     </div>
                                 </mat-grid-tile>
                             </mat-grid-list>
