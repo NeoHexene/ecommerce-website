@@ -1,6 +1,7 @@
 <div class="app-ecommerce-add-new-product">
     <div class="container mt-5">
-        <h1 mat-dialog-title>Add Product</h1>
+        <h1 mat-dialog-title *ngIf="product.id">Edit Product</h1>
+        <h1 mat-dialog-title *ngIf="!product.id">Add Product</h1>
         <div class="card p-2">
             <div class="row">
                 <!-- product form -->
@@ -36,7 +37,7 @@
                             <mat-hint>Product Actual Price</mat-hint>
                         </mat-form-field>
 
-                        <div align="end">
+                        <div class="button-container">
 
                             <button type="submit" mat-stroked-button color="primary" [disabled]="readonly"
                                 style="margin-right: 10px;">Save</button>

@@ -11,6 +11,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .show-images {
         width: 100px;
         height: 100px;
+        object-fit: cover;
     }
 
     .remove-image-button {
@@ -47,6 +48,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .image-browse-button {
         color: blue;
         cursor: pointer;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
     }
 }
 
