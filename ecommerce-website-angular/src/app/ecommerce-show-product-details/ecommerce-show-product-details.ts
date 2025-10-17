@@ -8,6 +8,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EcommerceDisplayProductImages } from '../ecommerce-display-product-images/ecommerce-display-product-images';
 import { EcommerceImageProcessingService } from '../_services/ecommerce-image-processing-service';
 import { map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ecommerce-show-product-details',
@@ -29,7 +30,8 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
 
   constructor(private productService: EcommerceProductService,
     private imagesDialog: MatDialog,
-    private imageProcessingService: EcommerceImageProcessingService
+    private imageProcessingService: EcommerceImageProcessingService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -82,7 +84,11 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
   }
 
   editProductDetails(element: any) {
-    
+    this.router.navigate(['/add-new-product'], {
+      state: {
+        id: element.id
+      }
+    });
   }
 
   showProductImages(element: any) {

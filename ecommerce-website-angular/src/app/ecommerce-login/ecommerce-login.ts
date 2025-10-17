@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { EcommerceUserService } from '../_services/ecommerce-user-service';
 import { Router } from '@angular/router';
@@ -23,7 +23,8 @@ export class EcommerceLogin implements OnInit {
   constructor(
     private userService: EcommerceUserService,
     private userAuthService: EcommerceUserAuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {};
 
   ngOnInit(): void {
@@ -53,6 +54,7 @@ export class EcommerceLogin implements OnInit {
         },
         error: (error) => {
           this.readonly = false;
+          this.cdr.detectChanges();
           console.error('Error: ', error);
           alert('Login failed: ' + (error.error?.message || 'Please try again'));
         }

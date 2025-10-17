@@ -26,19 +26,23 @@ public class ProductController {
     @PostMapping(value = "/v1/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<JSONObject> createNewProduct(@RequestPart("product") Product product, @RequestPart("imageFile") MultipartFile[] image) {
-
         product.setProductImages(productImageService.uploadProductImages(image));
-
         log.info("Entering into createNewProduct controller: {}", product);
         return new ResponseEntity<>(productService.createNewProduct(product), HttpStatus.OK);
     }
 
     @GetMapping("/v1/get-all")
     public ResponseEntity<JSONObject> getAllProducts() {
-        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
+        return new ResponseEntity<>(productService.getAllProductDetails(), HttpStatus.OK);
+    }
+
+    @GetMapping("/v1/get/{id}")
+    public ResponseEntity<JSONObject> getProductById(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.getProductDetailsById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/v1/delete/{id}")
+    @PreAuthorize("hasRole('admin')")
     public void deleteProductDetailsById(@PathVariable("id") Long id) {
         productService.deleteProductDetailsById(id);
     }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,9 +33,20 @@ public class ProductService {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject getAllProducts() {
+    public JSONObject getAllProductDetails() {
+        log.info("Entering into getAllProductDetails");
         List<Product> productList = productRepository.findAll();
         dataObject.put("data", productList);
+        return dataObject;
+    }
+
+    public JSONObject getProductDetailsById(Long id) {
+        log.info("Entering into getProductDetailsById: {}", id);
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            dataObject.put("data", product);
+        }
         return dataObject;
     }
 
