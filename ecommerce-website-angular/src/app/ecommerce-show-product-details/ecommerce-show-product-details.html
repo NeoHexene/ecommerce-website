@@ -3,56 +3,42 @@
         <h1 mat-dialog-title>All Product Details</h1>
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-            <ng-container matColumnDef="ID">
+            <ng-container matColumnDef="show-product-id">
                 <th mat-header-cell *matHeaderCellDef> ID </th>
                 <td mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="Name">
+            <ng-container matColumnDef="show-product-name">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="Description">
+            <ng-container matColumnDef="show-product-description">
                 <th mat-header-cell *matHeaderCellDef> Description </th>
                 <td mat-cell *matCellDef="let element"> {{element.productDescription}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="Discounted Price">
+            <ng-container matColumnDef="show-product-discountedPrice">
                 <th mat-header-cell *matHeaderCellDef> Discounted Price </th>
                 <td mat-cell *matCellDef="let element"> {{element.productDiscountedPrice}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="Actual Price">
+            <ng-container matColumnDef="show-product-actualPrice">
                 <th mat-header-cell *matHeaderCellDef> Actual Price </th>
                 <td mat-cell *matCellDef="let element"> {{element.productActualPrice}} </td>
             </ng-container>
 
-            <!-- View Button -->
-            <ng-container matColumnDef="Images">
-                <th mat-header-cell *matHeaderCellDef> Images </th>
+            <ng-container matColumnDef="show-product-action">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
                 <td mat-cell *matCellDef="let element">
                     <button mat-icon-button color="primary" (click)="showProductImages(element)">
                         <mat-icon>image</mat-icon>
                     </button>
-                </td>
-            </ng-container>
-            
-            <!-- Edit Button -->
-            <ng-container matColumnDef="Edit">
-                <th mat-header-cell *matHeaderCellDef> Edit </th>
-                <td mat-cell *matCellDef="let element">
+                    &nbsp;
                     <button mat-icon-button color="primary" (click)="editProductDetails(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
-                </td>
-            </ng-container>
-            
-
-            <!-- Delete Button -->
-            <ng-container matColumnDef="Delete">
-                <th mat-header-cell *matHeaderCellDef> Delete </th>
-                <td mat-cell *matCellDef="let element">
+                    &nbsp;
                     <button mat-icon-button color="warn" (click)="deleteProductDetails(element)">
                         <mat-icon>delete</mat-icon>
                     </button>

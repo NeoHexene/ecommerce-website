@@ -39,7 +39,10 @@ body {
     background-color: var(--mat-sys-accent);
     color: var(--mat-sys-on-accent);
   }
+}
 
+.mat-column-show-product-description {
+  width: px !important;
 }
 
 .mat-grid-tile {

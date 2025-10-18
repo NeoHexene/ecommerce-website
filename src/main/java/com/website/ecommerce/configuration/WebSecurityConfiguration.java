@@ -25,6 +25,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class WebSecurityConfiguration {
 
     @Autowired
+    private EcommercePropertyConfiguration ecommercePropertyConfiguration;
+
+    @Autowired
     private EcommerceJwtAuthenticationEntryPoint ecommerceJwtAuthenticationEntryPoint;
 
     @Autowired
@@ -42,7 +45,7 @@ public class WebSecurityConfiguration {
         http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/jwt/v1/create").permitAll()
+                        .requestMatchers(ecommercePropertyConfiguration.getAllowedEndPoints()).permitAll()
                         .anyRequest().authenticated()).formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception

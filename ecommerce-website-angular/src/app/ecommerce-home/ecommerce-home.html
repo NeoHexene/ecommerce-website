@@ -1,7 +1,27 @@
 <div class="app-ecommerce-home">
     <div class="container mt-5">
-        <div class="card text-center color-gray">
-            <h1>This is Home Page</h1>
-        </div>
+        <h1 mat-dialog-title>Home</h1>
+        <mat-grid-list cols="4" rowHeight="400px" gutterSize="10px"> 
+            <mat-grid-tile *ngFor="let p of productDetailsList">
+                <div class="product-card">
+                    
+                    <div class="image-container">
+                        <img [src]="p.productImages[0]?.url" alt="{{ p.productName }}"> 
+                    </div>
+                    
+                    <div class="content-container">
+                        <p><b>{{ p.productName }}</b></p>
+                        <p class="product-description-class">{{ p.productDescription }}</p>
+                        <p>
+                            <b>$ {{ p.productDiscountedPrice }}</b>
+                            &nbsp;
+                            <b class="actual-price-line-through">{{ p.productActualPrice }}</b>
+                        </p>
+                        <button mat-raised-button color="warn">View Details</button> 
+                    </div>
+
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
     </div>
 </div>

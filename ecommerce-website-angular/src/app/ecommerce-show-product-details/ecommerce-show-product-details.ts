@@ -25,7 +25,7 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['ID', 'Name', 'Description', 'Discounted Price', 'Actual Price', 'Images', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['show-product-id', 'show-product-name', 'show-product-description', 'show-product-discountedPrice', 'show-product-actualPrice', 'show-product-action'];
   dataSource = new MatTableDataSource<any>([]);
 
   constructor(private productService: EcommerceProductService,

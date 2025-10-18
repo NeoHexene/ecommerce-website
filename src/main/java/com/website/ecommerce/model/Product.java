@@ -20,6 +20,7 @@ public class Product {
 
     private String productName;
 
+    @Column(length = 4000)
     private String productDescription;
 
     private Double productDiscountedPrice;

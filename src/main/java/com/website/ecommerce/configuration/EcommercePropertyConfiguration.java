@@ -32,4 +32,7 @@ public class EcommercePropertyConfiguration {
 
     @Value("$(website.ecommerce.allowedOrigins)" )
     private String[] allowedOrigins;
+
+    @Value("$(website.ecommerce.allowedEndPoints)")
+    private String[] allowedEndPoints;
 }
