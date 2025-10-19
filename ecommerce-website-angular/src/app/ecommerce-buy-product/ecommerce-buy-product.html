@@ -1,0 +1,65 @@
+<div class="app-ecommerce-buy-product">
+    <div class="container mt-5">
+        <div class="card">
+            <div class="row">
+                <div class="col-6">
+
+                    <form #orderForm="ngForm" (ngSubmit)="saveOrder(orderForm)" class="p-4">
+
+                        <mat-form-field class="form-control mb-3" appearance="outline">
+                            <mat-label>Full Name</mat-label>
+                            <input [(ngModel)]="orderInput.fullName" matInput type="text" name="fullName"
+                                id="fullName" placeholder="Full Name" [disabled]="readonly">
+                            <mat-hint>Full Name</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-control mb-3" appearance="outline">
+                            <mat-label>Full Address</mat-label>
+                            <input [(ngModel)]="orderInput.fullAddress" matInput type="text"
+                                name="fullAddress" id="fullAddress" placeholder="Full Address"
+                                [disabled]="readonly">
+                            <mat-hint>Full Address</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-control mb-3" appearance="outline">
+                            <mat-label>Phone Number</mat-label>
+                            <input [(ngModel)]="orderInput.phone" matInput type="text"
+                                name="phone" id="phone"
+                                placeholder="Phone Number" [disabled]="readonly">
+                            <mat-hint>Phone Number</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-control mb-3" appearance="outline">
+                            <mat-label>Alternate Phone Number</mat-label>
+                            <input [(ngModel)]="orderInput.alternatePhone" matInput type="text"
+                                name="alternatePhone" id="alternatePhone" placeholder="Alternate Phone Number"
+                                [disabled]="readonly">
+                            <mat-hint>Alternate Phone Number</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-control mb-3" appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input [(ngModel)]="orderInput.email" matInput type="text"
+                                name="email" id="email" placeholder="Email"
+                                [disabled]="readonly">
+                            <mat-hint>Email</mat-hint>
+                        </mat-form-field>
+
+                        <div class="button-container">
+
+                            <button type="submit" mat-stroked-button color="primary" [disabled]="readonly"
+                                style="margin-right: 10px;">Place Order</button>
+                            <button type="reset" mat-stroked-button color="primary" [disabled]="readonly"
+                                style="margin-right: 5px;">Clear</button>
+
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-6">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

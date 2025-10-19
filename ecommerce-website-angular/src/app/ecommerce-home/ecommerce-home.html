@@ -6,7 +6,7 @@
                 <div class="product-card">
                     
                     <div class="image-container">
-                        <img [src]="p.productImages[0]?.url" alt="{{ p.productName }}"> 
+                        <img [src]="p.productImages[0]?.url"> 
                     </div>
                     
                     <div class="content-container">
@@ -17,7 +17,7 @@
                             &nbsp;
                             <b class="actual-price-line-through">{{ p.productActualPrice }}</b>
                         </p>
-                        <button mat-raised-button color="warn">View Details</button> 
+                        <button mat-raised-button color="warn" (click)="viewProductDetails(p.id)">View Details</button> 
                     </div>
 
                 </div>

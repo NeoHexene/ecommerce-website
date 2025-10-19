@@ -46,4 +46,9 @@ public class ProductController {
     public void deleteProductDetailsById(@PathVariable("id") Long id) {
         productService.deleteProductDetailsById(id);
     }
+
+    @GetMapping("/v1/check-out")
+    public ResponseEntity<JSONObject> getProductCheckoutDetails(@RequestParam(name = "single-product-checkout") boolean singleProductCheckout, @RequestParam(name = "product-id") Long productId) {
+        return new ResponseEntity<>(productService.getProductCheckoutDetails(singleProductCheckout, productId), HttpStatus.OK);
+    }
 }

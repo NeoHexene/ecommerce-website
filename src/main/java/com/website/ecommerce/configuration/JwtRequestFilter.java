@@ -22,6 +22,8 @@ import java.io.IOException;
 @Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+    public static String CURRENT_USER = "";
+
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -47,6 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         try {
             username = jwtUtil.getUserNameFromToken(token);
+            CURRENT_USER =  username;
         } catch (IllegalArgumentException e) {
             log.error("Unable to get JWT token", e);
         } catch (ExpiredJwtException e) {

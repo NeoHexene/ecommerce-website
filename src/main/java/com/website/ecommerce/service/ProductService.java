@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +22,6 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     private final JSONObject dataObject = new JSONObject();
-//    private final HashMap<String, Object> dataMap = new HashMap<>();
 
     @Transactional
     @SuppressWarnings("unchecked")
@@ -53,5 +53,19 @@ public class ProductService {
     public void deleteProductDetailsById(Long id) {
         log.info("Entering deleteProductDetails: {}", id);
         productRepository.deleteById(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public JSONObject getProductCheckoutDetails(boolean singleProductCheckout, Long id) {
+        log.info("Entering into getProductCheckoutDetails singleProductCheckout: {} id: {}", singleProductCheckout, id);
+        List<Product> productList = new ArrayList<>();
+        if  (singleProductCheckout) {
+            Optional<Product> productOptional = productRepository.findById(id);
+            productOptional.ifPresent(productList::add);
+        } else {
+
+        }
+        dataObject.put("data", productList);
+        return dataObject;
     }
 }

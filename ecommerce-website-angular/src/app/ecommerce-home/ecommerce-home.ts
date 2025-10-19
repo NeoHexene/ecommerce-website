@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { EcommerceProductService } from '../_services/ecommerce-product-service';
 import { EcommerceImageProcessingService } from '../_services/ecommerce-image-processing-service';
 import { map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ecommerce-home',
   imports: [MatGridListModule,
     CommonModule,
-    MatPaginatorModule,
     MatIconModule,],
   templateUrl: './ecommerce-home.html'
 })
@@ -25,7 +24,8 @@ export class EcommerceHome implements OnInit {
   constructor(
     private productService: EcommerceProductService,
     private imageProcessingService: EcommerceImageProcessingService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +34,14 @@ export class EcommerceHome implements OnInit {
     this.productDetailsList = [];
     this.product = {};
     this.productImagesList = [];
+  }
+
+  viewProductDetails(id: number) {
+    this.router.navigate(['/view-product-details'], {
+      state: {
+        id: id
+      }
+    });
   }
 
   getAllProductDetails() {

@@ -23,7 +23,7 @@ export const authInterceptor: HttpInterceptorFn = (
             console.error("Error: ", err);
             if (err.status === 401) {
                 authService.clear();
-                router.navigate(['/']);
+                router.navigate(['/login']);
             } else if (err.status === 403) {
                 router.navigate(['/forbidden']);
             }
