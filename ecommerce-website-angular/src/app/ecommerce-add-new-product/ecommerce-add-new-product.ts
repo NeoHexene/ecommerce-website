@@ -131,4 +131,10 @@ export class EcommerceAddNewProduct implements OnInit {
     }
   }
 
+  clearForm(form: NgForm) {
+    form.reset();
+    this.product = {};
+    this.productImagesList = [];
+    this.cdr.detectChanges();
+  }
 }

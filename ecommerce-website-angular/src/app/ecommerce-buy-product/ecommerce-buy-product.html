@@ -8,56 +8,46 @@
 
                         <mat-form-field class="form-control mb-3" appearance="outline">
                             <mat-label>Full Name</mat-label>
-                            <input [(ngModel)]="orderInput.fullName" matInput type="text" name="fullName"
-                                id="fullName" placeholder="Full Name" [disabled]="readonly">
-                            <mat-hint>Full Name</mat-hint>
+                            <input [(ngModel)]="orderInput.fullName" matInput required name="fullName" #fullName="ngModel">
+                            <mat-error *ngIf="fullName.invalid && fullName.touched">Full Name is required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="form-control mb-3" appearance="outline">
                             <mat-label>Full Address</mat-label>
-                            <input [(ngModel)]="orderInput.fullAddress" matInput type="text"
-                                name="fullAddress" id="fullAddress" placeholder="Full Address"
-                                [disabled]="readonly">
-                            <mat-hint>Full Address</mat-hint>
+                            <input [(ngModel)]="orderInput.fullAddress" matInput required name="fullAddress" #fullAddress="ngModel">
+                            <mat-error *ngIf="fullAddress.invalid && fullAddress.touched">Address is required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="form-control mb-3" appearance="outline">
                             <mat-label>Phone Number</mat-label>
-                            <input [(ngModel)]="orderInput.phone" matInput type="text"
-                                name="phone" id="phone"
-                                placeholder="Phone Number" [disabled]="readonly">
-                            <mat-hint>Phone Number</mat-hint>
+                            <input [(ngModel)]="orderInput.phone" matInput required name="phone" #phone="ngModel"
+                                   pattern="[0-9]{10}" minlength="10" maxlength="10">
+                            <mat-error *ngIf="phone.errors?.['required'] && phone.touched">Phone Number is required.</mat-error>
+                            <mat-error *ngIf="phone.errors?.['pattern'] && phone.touched">Please enter a valid 10-digit phone number.</mat-error>
                         </mat-form-field>
-
+ 
                         <mat-form-field class="form-control mb-3" appearance="outline">
                             <mat-label>Alternate Phone Number</mat-label>
-                            <input [(ngModel)]="orderInput.alternatePhone" matInput type="text"
-                                name="alternatePhone" id="alternatePhone" placeholder="Alternate Phone Number"
-                                [disabled]="readonly">
-                            <mat-hint>Alternate Phone Number</mat-hint>
+                            <input [(ngModel)]="orderInput.alternatePhone" matInput name="alternatePhone">
                         </mat-form-field>
 
                         <mat-form-field class="form-control mb-3" appearance="outline">
                             <mat-label>Email</mat-label>
-                            <input [(ngModel)]="orderInput.email" matInput type="text"
-                                name="email" id="email" placeholder="Email"
-                                [disabled]="readonly">
-                            <mat-hint>Email</mat-hint>
+                            <input [(ngModel)]="orderInput.email" matInput required email name="email" #email="ngModel">
+                            <mat-error *ngIf="email.errors?.['required'] && email.touched">Email is required.</mat-error>
+                            <mat-error *ngIf="email.errors?.['email'] && email.touched">Please enter a valid email address (e.g., name@example.com).</mat-error>
                         </mat-form-field>
 
                         <div class="button-container">
-
-                            <button type="submit" mat-stroked-button color="primary" [disabled]="readonly"
+                            <button type="submit" mat-stroked-button color="primary" [disabled]="readonly || orderForm.invalid"
                                 style="margin-right: 10px;">Place Order</button>
                             <button type="reset" mat-stroked-button color="primary" [disabled]="readonly"
                                 style="margin-right: 5px;">Clear</button>
-
                         </div>
                     </form>
 
                 </div>
                 <div class="col-6">
-
                 </div>
             </div>
         </div>

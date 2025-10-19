@@ -2,55 +2,57 @@
     <div class="container mt-5">
         <h1 mat-dialog-title *ngIf="product.id">Edit Product</h1>
         <h1 mat-dialog-title *ngIf="!product.id">Add Product</h1>
+
         <div class="card p-2">
             <div class="row">
-                <!-- product form -->
                 <div class="col-6">
-
                     <form #productForm="ngForm" (ngSubmit)="saveProduct(productForm)" class="p-4">
 
-                        <mat-form-field class="form-control mb-3" appearance="outline">
+                        <mat-form-field class="w-100 mb-3" appearance="outline">
                             <mat-label>Product Name</mat-label>
-                            <input [(ngModel)]="product.productName" matInput type="text" name="productName" id="productName"
-                                placeholder="Product Name" [disabled]="readonly">
-                            <mat-hint>Product Name</mat-hint>
+                            <input [(ngModel)]="product.productName" matInput required type="text" name="productName"
+                                #productName="ngModel" placeholder="Product Name" [disabled]="readonly">
+                            <mat-error *ngIf="productName.invalid && productName.touched">Product Name is
+                                required.</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field class="form-control mb-3" appearance="outline">
+                        <mat-form-field class="w-100 mb-3" appearance="outline">
                             <mat-label>Product Description</mat-label>
-                            <input [(ngModel)]="product.productDescription" matInput type="text" name="productDescription" id="productDescription"
+                            <input [(ngModel)]="product.productDescription" matInput required type="text"
+                                name="productDescription" #productDescription="ngModel"
                                 placeholder="Product Description" [disabled]="readonly">
-                            <mat-hint>Product Description</mat-hint>
+                            <mat-error *ngIf="productDescription.invalid && productDescription.touched">Product
+                                Description is required.</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field class="form-control mb-3" appearance="outline">
+                        <mat-form-field class="w-100 mb-3" appearance="outline">
                             <mat-label>Product Discounted Price</mat-label>
-                            <input [(ngModel)]="product.productDiscountedPrice" matInput type="text" name="productDiscountedPrice"
-                                id="productDiscountedPrice" placeholder="Product Discounted Price" [disabled]="readonly">
-                            <mat-hint>Product Discounted Price</mat-hint>
+                            <input [(ngModel)]="product.productDiscountedPrice" matInput required type="number"
+                                name="productDiscountedPrice" #productDiscountedPrice="ngModel"
+                                placeholder="Product Discounted Price" [disabled]="readonly">
+                            <mat-error
+                                *ngIf="productDiscountedPrice.invalid && productDiscountedPrice.touched">Discounted
+                                Price is required.</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field class="form-control mb-3" appearance="outline">
+                        <mat-form-field class="w-100 mb-3" appearance="outline">
                             <mat-label>Product Actual Price</mat-label>
-                            <input [(ngModel)]="product.productActualPrice" matInput type="text" name="productActualPrice" id="productActualPrice"
+                            <input [(ngModel)]="product.productActualPrice" matInput required type="number"
+                                name="productActualPrice" #productActualPrice="ngModel"
                                 placeholder="Product Actual Price" [disabled]="readonly">
-                            <mat-hint>Product Actual Price</mat-hint>
+                            <mat-error *ngIf="productActualPrice.invalid && productActualPrice.touched">Actual Price is
+                                required.</mat-error>
                         </mat-form-field>
 
                         <div class="button-container">
-
-                            <button type="submit" mat-stroked-button color="primary" [disabled]="readonly"
-                                style="margin-right: 10px;">Save</button>
-                            <button type="reset" mat-stroked-button color="primary" [disabled]="readonly"
-                                style="margin-right: 5px;">Clear</button>
-
+                            <button type="submit" mat-stroked-button color="primary"
+                                [disabled]="readonly || productForm.invalid || productImagesList.length === 0">Save</button>
+                            <button type="reset" mat-stroked-button color="warn" [disabled]="readonly"
+                                (click)="clearForm(productForm)">Clear</button>
                         </div>
-
                     </form>
-
                 </div>
 
-                <!-- image area -->
                 <div class="col-6">
                     <div>
                         <div class="image-drag-n-drop-area" appDrag (fileEvent)="dragAndDropFiles($event)">
