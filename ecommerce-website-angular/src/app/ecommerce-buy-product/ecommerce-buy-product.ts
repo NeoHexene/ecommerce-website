@@ -4,7 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EcommerceProductService } from '../_services/ecommerce-product-service';
 
 @Component({
@@ -26,7 +26,8 @@ export class EcommerceBuyProduct implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private productService: EcommerceProductService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +42,36 @@ export class EcommerceBuyProduct implements OnInit {
     });
     console.log(this.productDetails);
     console.log(this.productQuantityList);
+  }
 
+  getQuantityForProduct(id: number) {
+    const filteredProduct = this.productQuantityList.filter((product: any) => {
+      return product.productId === id
+    });
+    return filteredProduct.length > 0 ? filteredProduct[0].quantity : 1;
+  }
+
+  getCalculatedProductTotal(id: number, price: number) {
+    const quantity = this.getQuantityForProduct(id);
+    return quantity * price;
+  }
+
+  onChangeQuantity(quantity: any, id: number) {
+    const filteredProduct = this.productQuantityList.filter((product: any) => {
+      return product.productId === id
+    });
+    if(filteredProduct && filteredProduct.length > 0) {
+      filteredProduct[0].quantity = quantity;
+    }
+  }
+
+  getCalculatedTotal() {
+    let sum = 0;
+    this.productQuantityList.forEach((product: any) => {
+      const price = this.productDetails.filter((p: any) => p.id === product.productId)[0].productDiscountedPrice;
+      sum += price * product.quantity;
+    });
+    return sum;
   }
 
   saveOrder(form: NgForm) {
@@ -60,6 +90,7 @@ export class EcommerceBuyProduct implements OnInit {
           this.orderInput = {};
           this.productQuantityList = [];
           this.cdr.detectChanges();
+          this.router.navigate(['/order-confirmation'])
         },
         error: (error) => {
           console.log("Error: ", error);
