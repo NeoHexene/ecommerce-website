@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EcommerceProductService } from '../_services/ecommerce-product-service';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EcommerceDisplayProductImages } from '../ecommerce-display-product-images/ecommerce-display-product-images';
 import { EcommerceImageProcessingService } from '../_services/ecommerce-image-processing-service';
-import { map } from 'rxjs';
+import { map, tap, finalize } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-ecommerce-show-product-details',
@@ -17,7 +19,9 @@ import { Router } from '@angular/router';
     CommonModule,
     MatPaginatorModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './ecommerce-show-product-details.html'
 })
@@ -25,48 +29,73 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['show-product-id', 'show-product-name', 'show-product-description', 'show-product-discountedPrice', 'show-product-actualPrice', 'show-product-action'];
+  displayedColumns: string[] = [
+    'show-product-id',
+    'show-product-name',
+    'show-product-description',
+    'show-product-discountedPrice',
+    'show-product-actualPrice',
+    'show-product-action'
+  ];
   dataSource = new MatTableDataSource<any>([]);
-  pageNumber = 0;
-  pageSize = 10;
-  
-  constructor(private productService: EcommerceProductService,
+
+  totalElements: number = 0;
+  pageSize: number = 10;
+  pageNumber: number = 0;
+  isLoading: boolean = false;
+
+  constructor(
+    private productService: EcommerceProductService,
     private imagesDialog: MatDialog,
     private imageProcessingService: EcommerceImageProcessingService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
-  
+
   ngOnInit(): void {
-    console.clear();
-    this.pageNumber = 0;
-    this.pageSize = 10;
     this.getAllProductDetails();
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.paginator.page
+      .pipe(
+        tap(() => this.getAllProductDetails())
+      )
+      .subscribe();
   }
 
   getAllProductDetails() {
-    this.productService.getAllProducts(this.pageNumber,this.pageSize).pipe(
+    this.isLoading = true;
+    const currentPageIndex = this.paginator ? this.paginator.pageIndex : this.pageNumber;
+    const currentPageSize = this.paginator ? this.paginator.pageSize : this.pageSize;
+
+    this.productService.getAllProducts(currentPageIndex, currentPageSize).pipe(
       map((response: any) => {
         if (response && response.data) {
           response.data = response.data.map((product: any) =>
             this.imageProcessingService.createImages(product)
           );
         }
-        return response;
+        return response; // Return the full processed Page object
+      }),
+      finalize(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
       })
     ).subscribe({
       next: (response) => {
-        console.log("Response: ", response)
-        if (response && response.data) {
-          this.dataSource.data = response.data;
-        }
+        console.log("Response: ", response);
+        this.dataSource.data = response.data || [];
+        this.totalElements = response.totalElements || 0;
+        this.pageNumber = response.number || 0;
+        this.pageSize = response.size || currentPageSize;
       },
       error: (error) => {
-        console.error("Error: ", error);
-        alert("Error occurred in get all products: " + (error.error?.message || "Please try again"));
+        console.error("Error fetching products: ", error);
+        alert("Error occurred: " + (error.error?.message || "Please try again"));
+        this.dataSource.data = [];
+        this.totalElements = 0;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -75,15 +104,14 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
     if (element && element.id) {
       this.productService.deleteProductDetailsById(element.id).subscribe({
         next: (response) => {
-          console.log("Response: ", response);
+          console.log("Product deleted: ", response);
           this.getAllProductDetails();
         },
         error: (error) => {
-          console.error("Error: ", error);
-          alert("Error occurred while deleting the product: " + (error.error?.message || "Please try again"));
+          console.error("Error deleting product: ", error);
+          alert("Error occurred while deleting: " + (error.error?.message || "Please try again"));
         }
       });
-
     }
   }
 
@@ -104,5 +132,4 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
       }
     });
   }
-
 }
