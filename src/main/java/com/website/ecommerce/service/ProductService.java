@@ -35,21 +35,19 @@ public class ProductService {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject getAllProductDetails(int pageNumber) {
+    public JSONObject getAllProductDetails(int pageNumber, int pageSize) {
         log.info("Entering into getAllProductDetails");
-        Pageable pageable = PageRequest.of(pageNumber, 10);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<Product> productList = productRepository.findAll(pageable).getContent();
         dataObject.put("data", productList);
         return dataObject;
     }
 
+    @SuppressWarnings("unchecked")
     public JSONObject getProductDetailsById(Long id) {
         log.info("Entering into getProductDetailsById: {}", id);
         Optional<Product> productOptional = productRepository.findById(id);
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            dataObject.put("data", product);
-        }
+        productOptional.ifPresent(product -> dataObject.put("data", product));
         return dataObject;
     }
 

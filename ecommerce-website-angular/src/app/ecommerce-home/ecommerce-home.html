@@ -17,11 +17,14 @@
                             &nbsp;
                             <b class="actual-price-line-through">{{ p.productActualPrice }}</b>
                         </p>
-                        <button mat-raised-button color="warn" (click)="viewProductDetails(p.id)">View Details</button> 
+                        <button mat-raised-button color="primary" (click)="viewProductDetails(p.id)">View Details</button> 
                     </div>
 
                 </div>
             </mat-grid-tile>
         </mat-grid-list>
+        <div class="text-center mt-4">
+            <button *ngIf="showLoadButton" mat-raised-button color="primary" (click)="loadMoreProducts()" type="button">Load more products</button>
+        </div>
     </div>
 </div>

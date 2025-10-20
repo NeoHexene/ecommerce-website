@@ -25,15 +25,18 @@ public class ProductController {
 
     @PostMapping(value = "/v1/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('admin')")
-    public ResponseEntity<JSONObject> createNewProduct(@RequestPart("product") Product product, @RequestPart("imageFile") MultipartFile[] image) {
+    public ResponseEntity<JSONObject> createNewProduct(@RequestPart("product") Product product,
+            @RequestPart("imageFile") MultipartFile[] image) {
         product.setProductImages(productImageService.uploadProductImages(image));
         log.info("Entering into createNewProduct controller: {}", product);
         return new ResponseEntity<>(productService.createNewProduct(product), HttpStatus.OK);
     }
 
     @GetMapping("/v1/get-all")
-    public ResponseEntity<JSONObject> getAllProducts(@RequestParam(name = "page-number", defaultValue = "0") int pageNumber) {
-        return new ResponseEntity<>(productService.getAllProductDetails(pageNumber), HttpStatus.OK);
+    public ResponseEntity<JSONObject> getAllProducts(
+            @RequestParam(name = "page-number", defaultValue = "0") int pageNumber,
+            @RequestParam(name = "page-size", defaultValue = "10") int pageSize) {
+        return new ResponseEntity<>(productService.getAllProductDetails(pageNumber, pageSize), HttpStatus.OK);
     }
 
     @GetMapping("/v1/get/{id}")
@@ -48,7 +51,10 @@ public class ProductController {
     }
 
     @GetMapping("/v1/check-out")
-    public ResponseEntity<JSONObject> getProductCheckoutDetails(@RequestParam(name = "single-product-checkout") boolean singleProductCheckout, @RequestParam(name = "product-id") Long productId) {
-        return new ResponseEntity<>(productService.getProductCheckoutDetails(singleProductCheckout, productId), HttpStatus.OK);
+    public ResponseEntity<JSONObject> getProductCheckoutDetails(
+            @RequestParam(name = "single-product-checkout") boolean singleProductCheckout,
+            @RequestParam(name = "product-id") Long productId) {
+        return new ResponseEntity<>(productService.getProductCheckoutDetails(singleProductCheckout, productId),
+                HttpStatus.OK);
     }
 }

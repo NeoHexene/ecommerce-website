@@ -20,6 +20,9 @@ export class EcommerceHome implements OnInit {
   productImagesList: any = [];
   productDetailsList: any = [];
   product: any = {};
+  pageNumber = 0;
+  pageSize = 8;
+  showLoadButton = false;
 
   constructor(
     private productService: EcommerceProductService,
@@ -34,6 +37,8 @@ export class EcommerceHome implements OnInit {
     this.productDetailsList = [];
     this.product = {};
     this.productImagesList = [];
+    this.pageNumber = 0;
+    this.pageSize = 10;
   }
 
   viewProductDetails(id: number) {
@@ -44,8 +49,13 @@ export class EcommerceHome implements OnInit {
     });
   }
 
+  loadMoreProducts() {
+    this.pageNumber++;
+    this.getAllProductDetails();
+  }
+
   getAllProductDetails() {
-    this.productService.getAllProducts().pipe(
+    this.productService.getAllProducts(this.pageNumber,this.pageSize).pipe(
       map((response: any) => {
         if (response && response.data) {
           response.data = response.data.map((product: any) =>
@@ -57,10 +67,15 @@ export class EcommerceHome implements OnInit {
     ).subscribe({
       next: (response) => {
         console.log("Response: ", response)
-        if (response && response.data) {
+        if (response && response.data && response.data.length > 0) {
           this.productDetailsList = response.data;
-          this.cdr.detectChanges();
+          if (response.data.length < this.pageSize) {
+            this.showLoadButton = false;
+          } else {
+            this.showLoadButton = true;
+          }
         }
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error("Error: ", error);

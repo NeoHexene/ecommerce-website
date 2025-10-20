@@ -18,8 +18,8 @@ export class EcommerceProductService {
     return this.http.post(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/create`, formData);
   }
 
-  public getAllProducts(): Observable<any> {
-    return this.http.get(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/get-all`);
+  public getAllProducts(pageNumber: number, pageSize: number): Observable<any> {
+    return this.http.get(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/get-all?page-number=${pageNumber}&page-size=${pageSize}`);
   }
 
   public getProductDetailsById(id: number): Observable<any> {

@@ -27,15 +27,19 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['show-product-id', 'show-product-name', 'show-product-description', 'show-product-discountedPrice', 'show-product-actualPrice', 'show-product-action'];
   dataSource = new MatTableDataSource<any>([]);
-
+  pageNumber = 0;
+  pageSize = 10;
+  
   constructor(private productService: EcommerceProductService,
     private imagesDialog: MatDialog,
     private imageProcessingService: EcommerceImageProcessingService,
     private router: Router
   ) { }
-
+  
   ngOnInit(): void {
     console.clear();
+    this.pageNumber = 0;
+    this.pageSize = 10;
     this.getAllProductDetails();
   }
 
@@ -44,7 +48,7 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
   }
 
   getAllProductDetails() {
-    this.productService.getAllProducts().pipe(
+    this.productService.getAllProducts(this.pageNumber,this.pageSize).pipe(
       map((response: any) => {
         if (response && response.data) {
           response.data = response.data.map((product: any) =>
