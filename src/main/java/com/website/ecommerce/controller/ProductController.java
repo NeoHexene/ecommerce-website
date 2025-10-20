@@ -32,8 +32,8 @@ public class ProductController {
     }
 
     @GetMapping("/v1/get-all")
-    public ResponseEntity<JSONObject> getAllProducts() {
-        return new ResponseEntity<>(productService.getAllProductDetails(), HttpStatus.OK);
+    public ResponseEntity<JSONObject> getAllProducts(@RequestParam(name = "page-number", defaultValue = "0") int pageNumber) {
+        return new ResponseEntity<>(productService.getAllProductDetails(pageNumber), HttpStatus.OK);
     }
 
     @GetMapping("/v1/get/{id}")

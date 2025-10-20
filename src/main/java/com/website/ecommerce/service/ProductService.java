@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,9 +35,10 @@ public class ProductService {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject getAllProductDetails() {
+    public JSONObject getAllProductDetails(int pageNumber) {
         log.info("Entering into getAllProductDetails");
-        List<Product> productList = productRepository.findAll();
+        Pageable pageable = PageRequest.of(pageNumber, 10);
+        List<Product> productList = productRepository.findAll(pageable).getContent();
         dataObject.put("data", productList);
         return dataObject;
     }

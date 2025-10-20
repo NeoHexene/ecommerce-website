@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { EcommerceUserService } from '../_services/ecommerce-user-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { EcommerceUserAuthService } from '../_services/ecommerce-user-auth-service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,7 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    RouterLink
   ],
   templateUrl: './ecommerce-login.html'
 })

@@ -20,13 +20,16 @@ export class EcommerceUserService {
     return this.http.post(`${this.BASE_URL}/jwt/v1/create`, loginData, { headers: this.requestHeader });
   }
 
-  // Example method to get user profile
   getUserProfile(): Observable<any> {
     return this.http.get(`${this.BASE_URL}${this.BASE_USER_URL}/v1/get`);
   }
 
   getAdminProfile(): Observable<any> {
     return this.http.get(`${this.BASE_URL}${this.BASE_ADMIN_URL}/v1/get`);
+  }
+
+  registerNewUser(user: any): Observable<any> {
+    return this.http.post(`${this.BASE_URL}${this.BASE_USER_URL}/v1/create`, user);
   }
 
 }

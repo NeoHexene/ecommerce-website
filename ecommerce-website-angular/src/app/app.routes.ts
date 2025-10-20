@@ -11,13 +11,15 @@ import { EcommerceViewProductDetails } from './ecommerce-view-product-details/ec
 import { EcommerceBuyProduct } from './ecommerce-buy-product/ecommerce-buy-product';
 import { BuyProductResolver } from './_services/buy-product-resolver';
 import { EcommerceOrderConfirmation } from './ecommerce-order-confirmation/ecommerce-order-confirmation';
+import { EcommerceRegisterUser } from './ecommerce-register-user/ecommerce-register-user';
 
 export const routes: Routes = [
     { path: '', component: EcommerceHome },
     { path: 'forbidden', component: EcommerceForbidden },
     { path: 'login', component: EcommerceLogin },
     { path: 'view-product-details', component: EcommerceViewProductDetails },
-
+    { path: 'register-user', component: EcommerceRegisterUser },
+    
     { path: 'user', component: EcommerceUser, canActivate: [AuthGuard], data: { roles: ['user'] } },
     { path: 'buy-product', component: EcommerceBuyProduct, canActivate: [AuthGuard], data: { roles: ['user'] }, resolve: { productDetails: BuyProductResolver } },
     { path: 'order-confirmation', component: EcommerceOrderConfirmation, canActivate: [AuthGuard], data: { roles: ['user'] } },
