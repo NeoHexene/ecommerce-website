@@ -35,10 +35,15 @@ public class ProductService {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject getAllProductDetails(int pageNumber, int pageSize) {
+    public JSONObject getAllProductDetails(int pageNumber, int pageSize, String searchKeyword) {
         log.info("Entering into getAllProductDetails");
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<Product> productList = productRepository.findAll(pageable).getContent();
+        List<Product> productList = new ArrayList<>();
+        if (!searchKeyword.isEmpty()) {
+            productList = productRepository.findByProductNameContaining(searchKeyword, pageable).getContent();
+        } else {
+            productList = productRepository.findAll(pageable).getContent();
+        }
         dataObject.put("data", productList);
         return dataObject;
     }

@@ -35,8 +35,9 @@ public class ProductController {
     @GetMapping("/v1/get-all")
     public ResponseEntity<JSONObject> getAllProducts(
             @RequestParam(name = "page-number", defaultValue = "0") int pageNumber,
-            @RequestParam(name = "page-size", defaultValue = "10") int pageSize) {
-        return new ResponseEntity<>(productService.getAllProductDetails(pageNumber, pageSize), HttpStatus.OK);
+            @RequestParam(name = "page-size", defaultValue = "10") int pageSize,
+            @RequestParam(name = "search-keyword", defaultValue = "") String searchKeyword) {
+        return new ResponseEntity<>(productService.getAllProductDetails(pageNumber, pageSize, searchKeyword), HttpStatus.OK);
     }
 
     @GetMapping("/v1/get/{id}")
