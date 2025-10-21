@@ -23,6 +23,7 @@ export class EcommerceBuyProduct implements OnInit {
   orderInput: any = {};
   productDetails: any = [];
   productQuantityList: any = [];
+  notCartCheckout: any = true;
 
   constructor(private activatedRoute: ActivatedRoute,
     private productService: EcommerceProductService,
@@ -33,6 +34,7 @@ export class EcommerceBuyProduct implements OnInit {
   ngOnInit(): void {
 
     this.productDetails = this.activatedRoute?.snapshot?.data['productDetails'];
+    this.notCartCheckout = this.activatedRoute?.snapshot?.paramMap?.get('singleProduct');
     this.productDetails.forEach((product: any) => {
       let obj = {
         productId: product.id,
@@ -82,13 +84,14 @@ export class EcommerceBuyProduct implements OnInit {
         this.orderInput.orderProductQuantityDtoList = this.productQuantityList;
       }
       console.log("Order Input: ", this.orderInput);
-      this.productService.placeOrder(this.orderInput).subscribe({
+      this.productService.placeOrder(this.orderInput, this.notCartCheckout).subscribe({
         next: (response) => {
           console.log("Response: ", response);
           this.readonly = false;
           form.reset();
           this.orderInput = {};
           this.productQuantityList = [];
+          this.notCartCheckout = true;
           this.cdr.detectChanges();
           this.router.navigate(['/order-confirmation'])
         },

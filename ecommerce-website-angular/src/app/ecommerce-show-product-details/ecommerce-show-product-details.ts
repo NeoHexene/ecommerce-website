@@ -90,7 +90,7 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
             this.imageProcessingService.createImages(product)
           );
         }
-        return response; // Return the full processed Page object
+        return response;
       }),
       finalize(() => {
         this.isLoading = false;

@@ -35,12 +35,20 @@ export class EcommerceProductService {
     return this.http.get(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/check-out?single-product-checkout=${singleProduct}&product-id=${id}`);
   }
 
-  public placeOrder(orderInput: any): Observable<any> {
-    return this.http.post(`${this.BASE_URL}${this.BASE_ORDER_URL}/v1/place`, orderInput);
+  public placeOrder(orderInput: any, notCartCheckout: string): Observable<any> {
+    return this.http.post(`${this.BASE_URL}${this.BASE_ORDER_URL}/v1/place?not-cart-checkout=${notCartCheckout}`, orderInput);
   }
 
   public addToCart(id: number) {
     return this.http.get(`${this.BASE_URL}${this.BASE_CART_URL}/v1/get-items/${id}`);
+  }
+
+  public getCartDetails(): Observable<any> {
+    return this.http.get(`${this.BASE_URL}${this.BASE_CART_URL}/v1/get`);
+  }
+
+  public removeCartItem(id: number) {
+    return this.http.delete(`${this.BASE_URL}${this.BASE_CART_URL}/v1/remove-item/${id}`);
   }
 
 }

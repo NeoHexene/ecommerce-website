@@ -1,5 +1,6 @@
 package com.website.ecommerce.service;
 
+import java.lang.foreign.Linker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import com.website.ecommerce.repository.CartRepository;
 import com.website.ecommerce.repository.ProductRepository;
 import com.website.ecommerce.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,5 +66,17 @@ public class CartService {
             dataObject.put("data", cartList);
         }
         return dataObject;
+    }
+
+    @Transactional
+    public void removeProductFromCart(Long id) {
+        String currentUser = JwtRequestFilter.CURRENT_USER;
+        Optional<User> userOptional = userRepository.findByUserName(currentUser);
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (userOptional.isPresent() && productOptional.isPresent()) {
+            User user = userOptional.get();
+            Product product = productOptional.get();
+            cartRepository.deleteByUserAndProduct(user, product);
+        }
     }
 }

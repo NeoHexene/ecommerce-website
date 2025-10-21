@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,12 @@ public class CartController {
     @PreAuthorize("hasRole('user')")
     public ResponseEntity<JSONObject> getCartDetails() {
         return new ResponseEntity<>(cartService.getCartDetails(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/v1/remove-item/{productId}")
+    @PreAuthorize("hasRole('user')")
+    public void removeProductFromCart(@PathVariable("productId") Long productId) {
+        cartService.removeProductFromCart(productId);
     }
     
 }

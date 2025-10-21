@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/order-details")
@@ -23,8 +24,10 @@ public class OrderDetailsController {
 
     @PostMapping("/v1/place")
     @PreAuthorize("hasRole('user')")
-    public ResponseEntity<JSONObject> placeOrderDetails(@RequestBody OrderInputDto orderInputDto) {
+    public ResponseEntity<JSONObject> placeOrderDetails(
+            @RequestParam(name = "not-cart-checkout", defaultValue = "false") boolean isNotCartCheckout,
+            @RequestBody OrderInputDto orderInputDto) {
         log.info("OrderDetailsController:placeOrderDetails: {}", orderInputDto);
-        return new ResponseEntity<>(orderDetailsService.placeOrderDetails(orderInputDto),HttpStatus.OK);
+        return new ResponseEntity<>(orderDetailsService.placeOrderDetails(isNotCartCheckout, orderInputDto), HttpStatus.OK);
     }
 }

@@ -6,6 +6,7 @@ import com.website.ecommerce.dto.OrderProductQuantityDto;
 import com.website.ecommerce.model.OrderDetails;
 import com.website.ecommerce.model.Product;
 import com.website.ecommerce.model.User;
+import com.website.ecommerce.repository.CartRepository;
 import com.website.ecommerce.repository.OrderDetailsRepository;
 import com.website.ecommerce.repository.ProductRepository;
 import com.website.ecommerce.repository.UserRepository;
@@ -33,25 +34,33 @@ public class OrderDetailsService {
 
     private final UserRepository userRepository;
 
+    private final CartRepository cartRepository;
+
     private final JSONObject dataObject = new JSONObject();
 
     @Transactional
     @SuppressWarnings("unchecked")
-    public JSONObject placeOrderDetails(OrderInputDto orderInputDto) {
+    public JSONObject placeOrderDetails(boolean isNotCartCheckout, OrderInputDto orderInputDto) {
         try {
             List<OrderDetails> orderDetailsList = new ArrayList<>();
             List<OrderProductQuantityDto> orderProductQuantityDtoList = orderInputDto.getOrderProductQuantityDtoList();
-            for (OrderProductQuantityDto orderProductQuantityDto : orderProductQuantityDtoList) {
-                Optional<Product> optionalProduct = productRepository.findById(orderProductQuantityDto.getProductId());
-                String currentUser = JwtRequestFilter.CURRENT_USER;
-                Optional<User> optionalUser = userRepository.findByUserName(currentUser);
-                if (optionalProduct.isPresent() && optionalUser.isPresent()) {
-                    Product product = optionalProduct.get();
-                    User user = optionalUser.get();
-                    orderDetailsList.add(createOrderDetails(orderInputDto, orderProductQuantityDto, product, user));
+            String currentUser = JwtRequestFilter.CURRENT_USER;
+            Optional<User> optionalUser = userRepository.findByUserName(currentUser);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                for (OrderProductQuantityDto orderProductQuantityDto : orderProductQuantityDtoList) {
+                    Optional<Product> optionalProduct = productRepository.findById(orderProductQuantityDto.getProductId());
+                    if (optionalProduct.isPresent()) {
+                        Product product = optionalProduct.get();
+                        orderDetailsList.add(createOrderDetails(orderInputDto, orderProductQuantityDto, product, user));
+                    }
+                }
+                orderDetailsRepository.saveAll(orderDetailsList);
+                if (!isNotCartCheckout) {
+                    log.info("Deleting cart for user: {}", user.getId());
+                    cartRepository.deleteByUser(user);
                 }
             }
-            orderDetailsRepository.saveAll(orderDetailsList);
             dataObject.put("data", orderDetailsList);
         } catch (Exception e) {
             log.error("Exception in placeOrderDetails: {}", e);
