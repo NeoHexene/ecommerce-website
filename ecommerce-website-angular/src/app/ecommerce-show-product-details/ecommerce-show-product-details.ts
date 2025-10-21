@@ -11,6 +11,9 @@ import { map, tap, finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-ecommerce-show-product-details',
@@ -21,7 +24,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule
   ],
   templateUrl: './ecommerce-show-product-details.html'
 })
@@ -43,6 +49,7 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
   pageSize: number = 10;
   pageNumber: number = 0;
   isLoading: boolean = false;
+  searchProductKeyword = "";
 
   constructor(
     private productService: EcommerceProductService,
@@ -64,12 +71,19 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
       .subscribe();
   }
 
+  searchByKeyword(keyword: string) {
+    this.pageNumber = 0;
+    this.pageSize = 10;
+    this.searchProductKeyword = keyword;
+    this.getAllProductDetails();
+  }
+
   getAllProductDetails() {
     this.isLoading = true;
     const currentPageIndex = this.paginator ? this.paginator.pageIndex : this.pageNumber;
     const currentPageSize = this.paginator ? this.paginator.pageSize : this.pageSize;
 
-    this.productService.getAllProducts(currentPageIndex, currentPageSize).pipe(
+    this.productService.getAllProducts(currentPageIndex, currentPageSize, this.searchProductKeyword).pipe(
       map((response: any) => {
         if (response && response.data) {
           response.data = response.data.map((product: any) =>

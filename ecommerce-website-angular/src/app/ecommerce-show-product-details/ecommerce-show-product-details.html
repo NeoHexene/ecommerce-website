@@ -1,7 +1,15 @@
 <div class="app-ecommerce-show-product-details">
     <div class="container mt-5">
         <h1 mat-dialog-title>All Product Details</h1>
-
+        
+        <div>
+            <mat-form-field class="form-control mb-3" appearance="outline">
+                <mat-label>Search Product</mat-label>
+                <input #searchKeyword (keyup)="searchByKeyword(searchKeyword.value)" matInput type="text" name="searchKeyword" id="searchKeyword" placeholder="Search Product">
+                <mat-hint>Search Product</mat-hint>
+            </mat-form-field>
+        </div>
+        
         <div *ngIf="isLoading" style="text-align: center; margin: 20px;">
             <mat-spinner diameter="50"></mat-spinner>
         </div>
@@ -38,7 +46,7 @@
                         <button mat-icon-button color="primary" (click)="showProductImages(element)" matTooltip="View Images">
                             <mat-icon>image</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent" (click)="editProductDetails(element)" matTooltip="Edit Product">
+                        <button mat-icon-button color="primary" (click)="editProductDetails(element)" matTooltip="Edit Product">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <button mat-icon-button color="warn" (click)="deleteProductDetails(element)" matTooltip="Delete Product">
