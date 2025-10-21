@@ -9,6 +9,7 @@ export class EcommerceProductService {
   private BASE_URL = 'http://localhost:8080/ecommerce';
   private BASE_PRODUCT_URL = '/product';
   private BASE_ORDER_URL = '/order-details';
+  private BASE_CART_URL = '/cart'
 
   constructor(
     private http: HttpClient
@@ -36,6 +37,10 @@ export class EcommerceProductService {
 
   public placeOrder(orderInput: any): Observable<any> {
     return this.http.post(`${this.BASE_URL}${this.BASE_ORDER_URL}/v1/place`, orderInput);
+  }
+
+  public addToCart(id: number) {
+    return this.http.get(`${this.BASE_URL}${this.BASE_CART_URL}/v1/get-items/${id}`);
   }
 
 }

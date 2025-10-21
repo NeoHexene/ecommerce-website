@@ -1,5 +1,6 @@
 package com.website.ecommerce.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.json.simple.JSONObject;
@@ -51,5 +52,17 @@ public class CartService {
         cart.setProduct(product);
         cart.setUser(user);
         return cart;
+    }
+
+    @SuppressWarnings("unchecked")
+    public JSONObject getCartDetails() {
+        String currentUser = JwtRequestFilter.CURRENT_USER;
+        Optional<User> userOptional = userRepository.findByUserName(currentUser);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            List<Cart> cartList = cartRepository.findByUser(user);
+            dataObject.put("data", cartList);
+        }
+        return dataObject;
     }
 }

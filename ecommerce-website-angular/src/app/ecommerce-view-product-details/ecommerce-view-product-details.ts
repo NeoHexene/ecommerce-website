@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { EcommerceProductService } from '../_services/ecommerce-product-service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SafeUrl } from '@angular/platform-browser';
 import { EcommerceImageProcessingService } from '../_services/ecommerce-image-processing-service';
 import { map } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -25,10 +25,9 @@ export class EcommerceViewProductDetails {
 
 
   constructor(private productService: EcommerceProductService,
-    private domSanitizer: DomSanitizer,
     private imageProcessingService: EcommerceImageProcessingService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -76,5 +75,18 @@ export class EcommerceViewProductDetails {
       singleProduct: true,
       id: id
     }]);
+  }
+
+  addToCart(id: number) {
+    this.productService.addToCart(id).subscribe({
+      next: (response) => {
+        console.log("Response: ", response);
+        alert('Product added to cart successfully');
+      },
+      error: (error) => {
+        console.log("Error: ", error);
+        alert('Error occurred while adding product to cart: ' + (error.error?.message || 'Please try again'));
+      }
+    });
   }
 }

@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @GetMapping("/v1/get/{id}")
-    public ResponseEntity<JSONObject> getProductById(@PathVariable Long id) {
+    public ResponseEntity<JSONObject> getProductById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(productService.getProductDetailsById(id), HttpStatus.OK);
     }
 

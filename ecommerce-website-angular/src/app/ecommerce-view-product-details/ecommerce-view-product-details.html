@@ -28,9 +28,13 @@
                         &nbsp;
                         <b class="actual-price-line-through">{{product.productActualPrice}}</b>
                     </div>
-                    <div class="mt-3 text-center">
-                        <button mat-raised-button color="primary" (click)="buyProduct(product.id)">
+                    <div class="mt-3 text-center button-row">
+                        <button mat-raised-button color="warn" (click)="buyProduct(product.id)">
                             Buy Now
+                        </button>
+
+                        <button mat-raised-button color="primary" (click)="addToCart(product.id)">
+                            Add to cart
                         </button>
                     </div>
                 </div>
