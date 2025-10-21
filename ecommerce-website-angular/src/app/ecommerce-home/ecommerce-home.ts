@@ -6,12 +6,21 @@ import { EcommerceProductService } from '../_services/ecommerce-product-service'
 import { EcommerceImageProcessingService } from '../_services/ecommerce-image-processing-service';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-ecommerce-home',
   imports: [MatGridListModule,
     CommonModule,
-    MatIconModule,],
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule
+  ],
   templateUrl: './ecommerce-home.html'
 })
 export class EcommerceHome implements OnInit {
@@ -23,6 +32,7 @@ export class EcommerceHome implements OnInit {
   pageNumber = 0;
   pageSize = 8;
   showLoadButton = false;
+  searchProductKeyword = "";
 
   constructor(
     private productService: EcommerceProductService,
@@ -49,13 +59,20 @@ export class EcommerceHome implements OnInit {
     });
   }
 
+  searchByKeyword(keyword: string) {
+    this.pageNumber = 0;
+    this.pageSize = 8;
+    this.searchProductKeyword = keyword;
+    this.getAllProductDetails();
+  }
+
   loadMoreProducts() {
     this.pageNumber++;
     this.getAllProductDetails();
   }
 
   getAllProductDetails() {
-    this.productService.getAllProducts(this.pageNumber,this.pageSize).pipe(
+    this.productService.getAllProducts(this.pageNumber,this.pageSize, this.searchProductKeyword).pipe(
       map((response: any) => {
         if (response && response.data) {
           response.data = response.data.map((product: any) =>

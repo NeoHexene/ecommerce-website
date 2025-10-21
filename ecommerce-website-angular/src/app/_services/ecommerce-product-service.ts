@@ -14,12 +14,12 @@ export class EcommerceProductService {
     private http: HttpClient
   ) { }
 
-  public saveProduct(formData: FormData): Observable<any>{
+  public saveProduct(formData: FormData): Observable<any> {
     return this.http.post(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/create`, formData);
   }
 
-  public getAllProducts(pageNumber: number, pageSize: number): Observable<any> {
-    return this.http.get(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/get-all?page-number=${pageNumber}&page-size=${pageSize}`);
+  public getAllProducts(pageNumber: number, pageSize: number, searchKeyword: string): Observable<any> {
+    return this.http.get(`${this.BASE_URL}${this.BASE_PRODUCT_URL}/v1/get-all?page-number=${pageNumber}&page-size=${pageSize}&search-keyword=${searchKeyword}`);
   }
 
   public getProductDetailsById(id: number): Observable<any> {
@@ -37,5 +37,5 @@ export class EcommerceProductService {
   public placeOrder(orderInput: any): Observable<any> {
     return this.http.post(`${this.BASE_URL}${this.BASE_ORDER_URL}/v1/place`, orderInput);
   }
-  
+
 }

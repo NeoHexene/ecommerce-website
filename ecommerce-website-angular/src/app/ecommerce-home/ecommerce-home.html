@@ -1,14 +1,23 @@
 <div class="app-ecommerce-home">
     <div class="container mt-5">
         <h1 mat-dialog-title>Home</h1>
-        <mat-grid-list cols="4" rowHeight="400px" gutterSize="10px"> 
+
+        <div>
+            <mat-form-field class="form-control mb-3" appearance="outline">
+                <mat-label>Search Product</mat-label>
+                <input #searchKeyword (keyup)="searchByKeyword(searchKeyword.value)" matInput type="text" name="searchKeyword" id="searchKeyword" placeholder="Search Product">
+                <mat-hint>Search Product</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <mat-grid-list cols="4" rowHeight="400px" gutterSize="10px">
             <mat-grid-tile *ngFor="let p of productDetailsList">
                 <div class="product-card">
-                    
+
                     <div class="image-container">
-                        <img [src]="p.productImages[0]?.url"> 
+                        <img [src]="p.productImages[0]?.url">
                     </div>
-                    
+
                     <div class="content-container">
                         <p><b>{{ p.productName }}</b></p>
                         <p class="product-description-class">{{ p.productDescription }}</p>
@@ -17,14 +26,16 @@
                             &nbsp;
                             <b class="actual-price-line-through">{{ p.productActualPrice }}</b>
                         </p>
-                        <button mat-raised-button color="primary" (click)="viewProductDetails(p.id)">View Details</button> 
+                        <button mat-raised-button color="primary" (click)="viewProductDetails(p.id)">View
+                            Details</button>
                     </div>
 
                 </div>
             </mat-grid-tile>
         </mat-grid-list>
         <div class="text-center mt-4">
-            <button *ngIf="showLoadButton" mat-raised-button color="primary" (click)="loadMoreProducts()" type="button">Load more products</button>
+            <button *ngIf="showLoadButton" mat-raised-button color="primary" (click)="loadMoreProducts()"
+                type="button">Load more products</button>
         </div>
     </div>
 </div>
