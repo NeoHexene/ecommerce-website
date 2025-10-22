@@ -1,5 +1,7 @@
 package com.website.ecommerce.model;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,9 +33,15 @@ public class OrderDetails {
 
     private Double orderPrice;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Product product;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "ecommerce_order_details_product_mapping",
+        joinColumns = {@JoinColumn(name = "order_details_id")},
+        inverseJoinColumns = {@JoinColumn(name = "product_id")}
+    )
+    private Set<Product> products;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 }

@@ -60,26 +60,19 @@ export class EcommerceCartDetails {
     ).subscribe({
       next: (response) => {
         console.log("Response: ", response);
-        this.dataSource.data = response.data || [];
+        this.dataSource.data = response.data.products || [];
         this.cdr.detectChanges();
       },
       error: (error) => {
         console.error("Error fetching products: ", error);
         alert("Error occurred: " + (error.error?.message || "Please try again"));
+        this.dataSource.data = [];
         this.cdr.detectChanges();
       }
     });
   }
 
   checkout() {
-    // this.productService.getProductCheckoutDetails(false, 0).subscribe({
-    //   next: (response) => {
-    //     console.log("Response: ", response);
-    //   },
-    //   error: (error) => {
-    //     console.error("Error in checkout: ", error);
-    //   }
-    // });
     this.router.navigate(['/buy-product', {
       singleProduct: false,
       id: 0
@@ -94,6 +87,7 @@ export class EcommerceCartDetails {
       },
       error: (error) => {
         console.error("Error in removing cart item: ", error);
+        alert("Error removing item: " + (error.error?.message || "Please try again"));
       }
     });
   }

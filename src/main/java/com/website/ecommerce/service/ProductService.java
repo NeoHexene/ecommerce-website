@@ -48,12 +48,16 @@ public class ProductService {
         log.info("Entering into getAllProductDetails");
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<Product> productList = new ArrayList<>();
+        int totalPages = 0;
         if (!searchKeyword.isEmpty()) {
             productList = productRepository.findByProductNameContaining(searchKeyword, pageable).getContent();
+            totalPages = productRepository.findByProductNameContaining(searchKeyword, pageable).getTotalPages();
         } else {
             productList = productRepository.findAll(pageable).getContent();
+            totalPages = productRepository.findAll(pageable).getTotalPages();
         }
         dataObject.put("data", productList);
+        dataObject.put("totalPages", totalPages);
         return dataObject;
     }
 
@@ -82,8 +86,11 @@ public class ProductService {
             Optional<User> userOptional = userRepository.findByUserName(currentUser);
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                List<Cart> cartList = cartRepository.findByUser(user);
-                cartList.forEach(cart -> productList.add(cart.getProduct()));
+                Optional<Cart> cartOptional = cartRepository.findByUser(user);
+                if (cartOptional.isPresent()) {
+                    Cart cart = cartOptional.get();
+                    productList.addAll(cart.getProducts());
+                }
             }
         }
         dataObject.put("data", productList);

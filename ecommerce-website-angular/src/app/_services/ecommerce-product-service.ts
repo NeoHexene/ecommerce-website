@@ -39,6 +39,10 @@ export class EcommerceProductService {
     return this.http.post(`${this.BASE_URL}${this.BASE_ORDER_URL}/v1/place?not-cart-checkout=${notCartCheckout}`, orderInput);
   }
 
+  public getUserOrderDetails(pageNumber: number, pageSize: number): Observable<any> {
+    return this.http.get(`${this.BASE_URL}${this.BASE_ORDER_URL}/v1/user/get-all?page-number=${pageNumber}&page-size=${pageSize}`);
+  }
+
   public addToCart(id: number) {
     return this.http.get(`${this.BASE_URL}${this.BASE_CART_URL}/v1/get-items/${id}`);
   }

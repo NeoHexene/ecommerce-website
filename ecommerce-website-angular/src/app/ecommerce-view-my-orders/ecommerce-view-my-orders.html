@@ -1,0 +1,61 @@
+<div class="app-ecommerce-view-my-orders">
+    <div class="container mt-5">
+        <h1>My Orders</h1>
+        <div *ngIf="isLoading" style="text-align: center; margin: 20px;">
+            <mat-spinner diameter="50"></mat-spinner>
+        </div>
+        <div class="mat-elevation-z8" [hidden]="isLoading">
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="view-order-id">
+                    <th mat-header-cell *matHeaderCellDef> Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="view-order-name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.orderName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="view-order-address">
+                    <th mat-header-cell *matHeaderCellDef> Address </th>
+                    <td mat-cell *matCellDef="let element"> {{element.orderAddress}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="view-product-name">
+                    <th mat-header-cell *matHeaderCellDef> Products </th>
+                    <td mat-cell *matCellDef="let element"> {{getProductNames(element.products)}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="view-order-amount">
+                    <th mat-header-cell *matHeaderCellDef> Amount </th>
+                    <td mat-cell *matCellDef="let element"> {{element.orderPrice}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="view-order-status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element"> {{element.orderStatus}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center; padding: 20px;">
+                        No Orders found.
+                    </td>
+                </tr>
+            </table>
+
+            <mat-paginator
+                [length]="totalElements"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                [pageIndex]="pageNumber"
+                showFirstLastButtons
+                aria-label="Select page of orders">
+            </mat-paginator>
+
+        </div>
+    </div>
+</div>

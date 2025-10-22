@@ -13,6 +13,7 @@ import { BuyProductResolver } from './_services/buy-product-resolver';
 import { EcommerceOrderConfirmation } from './ecommerce-order-confirmation/ecommerce-order-confirmation';
 import { EcommerceRegisterUser } from './ecommerce-register-user/ecommerce-register-user';
 import { EcommerceCartDetails } from './ecommerce-cart-details/ecommerce-cart-details';
+import { EcommerceViewMyOrders } from './ecommerce-view-my-orders/ecommerce-view-my-orders';
 
 export const routes: Routes = [
     { path: '', component: EcommerceHome },
@@ -25,7 +26,8 @@ export const routes: Routes = [
     { path: 'buy-product', component: EcommerceBuyProduct, canActivate: [AuthGuard], data: { roles: ['user'] }, resolve: { productDetails: BuyProductResolver } },
     { path: 'order-confirmation', component: EcommerceOrderConfirmation, canActivate: [AuthGuard], data: { roles: ['user'] } },
     { path: 'cart-details', component: EcommerceCartDetails, canActivate: [AuthGuard], data: { roles: ['user'] } },
-
+    { path: 'my-orders', component: EcommerceViewMyOrders, canActivate: [AuthGuard], data: { roles: ['user'] } },
+    
     { path: 'admin', component: EcommerceAdmin, canActivate: [AuthGuard], data: { roles: ['admin'] } },
     { path: 'add-new-product', component: EcommerceAddNewProduct, canActivate: [AuthGuard], data: { roles: ['admin'] } },
     { path: 'show-product-details', component: EcommerceShowProductDetails, canActivate: [AuthGuard], data: { roles: ['admin'] } },

@@ -100,7 +100,7 @@ export class EcommerceShowProductDetails implements OnInit, AfterViewInit {
       next: (response) => {
         console.log("Response: ", response);
         this.dataSource.data = response.data || [];
-        this.totalElements = response.totalElements || 0;
+        this.totalElements = response.totalPages || 0;
         this.pageNumber = response.number || 0;
         this.pageSize = response.size || currentPageSize;
       },
