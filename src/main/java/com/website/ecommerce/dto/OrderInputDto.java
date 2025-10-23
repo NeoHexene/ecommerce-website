@@ -13,5 +13,6 @@ public class OrderInputDto {
     private String phone;
     private String alternatePhone;
     private String email;
+    private String paymentId;
     private List<OrderProductQuantityDto> orderProductQuantityDtoList;
 }

@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EcommerceProductService } from '../_services/ecommerce-product-service';
 
+declare var Razorpay: any;
 @Component({
   selector: 'app-ecommerce-buy-product',
   imports: [CommonModule,
@@ -76,32 +77,86 @@ export class EcommerceBuyProduct implements OnInit {
     return sum;
   }
 
-  saveOrder(form: NgForm) {
+  initiateTransaction(form: NgForm) {
     if(form.valid) {
       this.readonly = true;
-      this.orderInput = form.value;
-      if(this.productQuantityList && this.productQuantityList.length > 0) {
-        this.orderInput.orderProductQuantityDtoList = this.productQuantityList;
-      }
-      console.log("Order Input: ", this.orderInput);
-      this.productService.placeOrder(this.orderInput, this.notCartCheckout).subscribe({
+      let amount = this.getCalculatedTotal();
+      this.productService.initiateTransaction(amount).subscribe({
         next: (response) => {
-          console.log("Response: ", response);
+          console.log("Response: {}", response);
           this.readonly = false;
-          form.reset();
-          this.orderInput = {};
-          this.productQuantityList = [];
-          this.notCartCheckout = true;
+          this.openTransactionModal(response.data, form);
           this.cdr.detectChanges();
-          this.router.navigate(['/order-confirmation'])
         },
         error: (error) => {
           console.log("Error: ", error);
           this.readonly = false;
           this.cdr.detectChanges();
-          alert('Error occurred while placing order: ' + (error.error?.message || 'Please try again'));
+          alert('Error occurred while initiating transaction: ' + (error.error?.message || 'Please try again'));
         }
       });
     }
+  }
+
+  openTransactionModal(response: any, form: NgForm) {
+    var options = {
+      order_id: response.orderId,
+      key: response.key,
+      currency: response.currency,
+      amount: response.amount,
+      name: form.value.fullName,
+      description: 'Payment for Ecommerce Website',
+      image: 'https://cdn.pixabay.com/photo/2021/09/15/09/19/money-6626359_1280.png',
+      handler: (response: any) => {
+        if(response != null && response.razorpay_payment_id != null) {
+          this.saveOrder(response, form);
+        } else {
+          alert('Payment failed. Please try again.');
+          this.readonly=false;
+          this.cdr.detectChanges();
+        }
+      },
+      prefill: {
+        name: 'Ecommerce Website',
+        email: 'ecommerce.website@usc.edu',
+        contact: '9000000007'
+      },
+      notes: {
+        address: 'Ecommerce Website Headquarters'
+      },
+      theme: {
+        color: '#99ff9cff'
+      }
+    };
+    var rzp = new Razorpay(options);
+    rzp.open();
+  }
+
+  saveOrder(response: any, form: NgForm) {
+    this.readonly = true;
+    this.orderInput = form.value;
+    this.orderInput.paymentId = response.razorpay_payment_id;
+    if(this.productQuantityList && this.productQuantityList.length > 0) {
+      this.orderInput.orderProductQuantityDtoList = this.productQuantityList;
+    }
+    console.log("Order Input: ", this.orderInput);
+    this.productService.placeOrder(this.orderInput, this.notCartCheckout).subscribe({
+      next: (response) => {
+        console.log("Response: ", response);
+        this.readonly = false;
+        form.reset();
+        this.orderInput = {};
+        this.productQuantityList = [];
+        this.notCartCheckout = true;
+        this.cdr.detectChanges();
+        this.router.navigate(['/order-confirmation'])
+      },
+      error: (error) => {
+        console.log("Error: ", error);
+        this.readonly = false;
+        this.cdr.detectChanges();
+        alert('Error occurred while placing order: ' + (error.error?.message || 'Please try again'));
+      }
+    });
   }
 }

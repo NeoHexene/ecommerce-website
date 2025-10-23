@@ -80,6 +80,7 @@ public class OrderDetailsService {
         orderDetails.setOrderPhone(orderInputDto.getPhone());
         orderDetails.setOrderAlternatePhone(orderInputDto.getAlternatePhone());
         orderDetails.setOrderEmail(orderInputDto.getEmail());
+        orderDetails.setPaymentId(orderInputDto.getPaymentId());
         orderDetails.setOrderStatus(ecommercePropertyConfiguration.getOrderPlaced());
         orderDetails.setProducts(new HashSet<>());
         orderDetails.setUser(user);

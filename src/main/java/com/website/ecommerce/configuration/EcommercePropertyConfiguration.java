@@ -45,4 +45,12 @@ public class EcommercePropertyConfiguration {
     @Value("$(website.ecommerce.order-canceled)")
     private String orderCanceled;
 
+    @Value("$(website.ecommerce.razorpay-key-id)")
+    private String razorpayKeyId;
+
+    @Value("$(website.ecommerce.razorpay-key-secret)")
+    private String razorpayKeySecret;
+
+    @Value("$(website.ecommerce.razorpay-currency)")
+    private String razorpayCurrency;
 }

@@ -9,7 +9,8 @@ export class EcommerceProductService {
   private BASE_URL = 'http://localhost:8080/ecommerce';
   private BASE_PRODUCT_URL = '/product';
   private BASE_ORDER_URL = '/order-details';
-  private BASE_CART_URL = '/cart'
+  private BASE_CART_URL = '/cart';
+  private BASE_TRANSACTION_URL = '/transaction';
 
   constructor(
     private http: HttpClient
@@ -63,4 +64,7 @@ export class EcommerceProductService {
     return this.http.delete(`${this.BASE_URL}${this.BASE_CART_URL}/v1/remove-item/${id}`);
   }
 
+  public initiateTransaction(amount: number): Observable<any> {
+    return this.http.get(`${this.BASE_URL}${this.BASE_TRANSACTION_URL}/v1/initiate?amount=${amount}`);
+  }
 }

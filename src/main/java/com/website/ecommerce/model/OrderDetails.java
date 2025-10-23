@@ -33,6 +33,8 @@ public class OrderDetails {
 
     private Double orderPrice;
 
+    private String paymentId;
+
     @ManyToMany
     @JoinTable(
         name = "ecommerce_order_details_product_mapping",
