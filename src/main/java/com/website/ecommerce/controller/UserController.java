@@ -32,6 +32,7 @@ public class UserController {
         return new ResponseEntity<>(userService.createNewUser(user), HttpStatus.OK);
     }
 
+    @SuppressWarnings("unchecked")
     @GetMapping("/user/v1/get")
     @PreAuthorize("hasRole('user')")
     public ResponseEntity<JSONObject> getUserDemo() {
@@ -48,6 +49,7 @@ public class UserController {
         return new ResponseEntity<>(userService.createNewAdmin(user), HttpStatus.OK);
     }
 
+    @SuppressWarnings("unchecked")
     @GetMapping("/admin/v1/get")
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<JSONObject> getAdminDemo() {

@@ -210,3 +210,12 @@ body {
         justify-content: flex-end;
     }
 }
+
+.app-ecommerce-view-all-orders {
+    .button-row {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+}

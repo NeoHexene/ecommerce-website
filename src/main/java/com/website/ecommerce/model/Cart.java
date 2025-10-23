@@ -18,7 +18,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
         name = "ecommerce_cart_product_mapping",
         joinColumns = {@JoinColumn(name = "cart_id")},
@@ -26,7 +26,7 @@ public class Cart {
     )
     private Set<Product> products;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 }

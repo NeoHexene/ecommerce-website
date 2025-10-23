@@ -53,9 +53,9 @@ public class OrderDetailsController {
         return new ResponseEntity<>(orderDetailsService.getAllOrderDetails(pageNumber, pageSize), HttpStatus.OK);
     }
 
-    @PostMapping("/v1/update-status")
+    @GetMapping("/v1/admin/update-status")
     @PreAuthorize("hasRole('admin')")
-    public void updateOrderStatus(@RequestParam(name = "order-ids") List<Long> orderIds) {
-        
+    public void updateOrderStatus(@RequestParam(name = "order-ids") List<Long> orderIds, @RequestParam(name = "status") String status){
+        orderDetailsService.updateOrderStatus(orderIds, status);
     }
 }

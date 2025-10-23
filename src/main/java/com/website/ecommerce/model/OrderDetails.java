@@ -33,7 +33,7 @@ public class OrderDetails {
 
     private Double orderPrice;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
         name = "ecommerce_order_details_product_mapping",
         joinColumns = {@JoinColumn(name = "order_details_id")},
@@ -41,7 +41,7 @@ public class OrderDetails {
     )
     private Set<Product> products;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 }

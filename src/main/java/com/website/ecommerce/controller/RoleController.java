@@ -2,7 +2,6 @@ package com.website.ecommerce.controller;
 
 import com.website.ecommerce.model.Role;
 import com.website.ecommerce.service.RoleService;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;

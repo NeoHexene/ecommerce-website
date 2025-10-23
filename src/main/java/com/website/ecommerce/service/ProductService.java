@@ -3,7 +3,6 @@ package com.website.ecommerce.service;
 import com.website.ecommerce.configuration.JwtRequestFilter;
 import com.website.ecommerce.model.Cart;
 import com.website.ecommerce.model.Product;
-import com.website.ecommerce.model.Role;
 import com.website.ecommerce.model.User;
 import com.website.ecommerce.repository.CartRepository;
 import com.website.ecommerce.repository.ProductRepository;

@@ -14,6 +14,7 @@ import { EcommerceOrderConfirmation } from './ecommerce-order-confirmation/ecomm
 import { EcommerceRegisterUser } from './ecommerce-register-user/ecommerce-register-user';
 import { EcommerceCartDetails } from './ecommerce-cart-details/ecommerce-cart-details';
 import { EcommerceViewMyOrders } from './ecommerce-view-my-orders/ecommerce-view-my-orders';
+import { EcommerceViewAllOrders } from './ecommerce-view-all-orders/ecommerce-view-all-orders';
 
 export const routes: Routes = [
     { path: '', component: EcommerceHome },
@@ -31,6 +32,7 @@ export const routes: Routes = [
     { path: 'admin', component: EcommerceAdmin, canActivate: [AuthGuard], data: { roles: ['admin'] } },
     { path: 'add-new-product', component: EcommerceAddNewProduct, canActivate: [AuthGuard], data: { roles: ['admin'] } },
     { path: 'show-product-details', component: EcommerceShowProductDetails, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+    { path: 'view-all-orders', component: EcommerceViewAllOrders, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
     // { path: '**', redirectTo: '/' }
 ];

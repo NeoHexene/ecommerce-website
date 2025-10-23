@@ -113,9 +113,19 @@ public class OrderDetailsService {
         return dataObject;
     }
 
-    @SuppressWarnings("unchecked")
-    public void updateOrderStatus(List<Long> orderIds) {
+    public void updateOrderStatus(List<Long> orderIds, String status) {
         log.info("Updating status for ids: {}", orderIds);
-        orderDetailsRepository.updateOrderStatus(orderIds, ecommercePropertyConfiguration.getOrderDelivered());
+        switch (status.toLowerCase()) {
+            case "delivered":
+                orderDetailsRepository.updateOrderStatus(orderIds, ecommercePropertyConfiguration.getOrderDelivered());
+                break;
+
+            case "canceled":
+                orderDetailsRepository.updateOrderStatus(orderIds, ecommercePropertyConfiguration.getOrderCanceled());
+                break;
+        
+            default:
+                break;
+        }
     }
 }
