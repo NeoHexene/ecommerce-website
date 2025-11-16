@@ -88,3 +88,13 @@ Update `application.properties` with MySQL and Razorpay credentials.
 - Advanced analytics dashboard
 - Coupon system
 - WebSocket for real-time inventory
+
+---
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) file
+
+---
+
+**Built by [Aniruddha](https://github.com/NeoHexene)** | *Star ⭐ if you find this interesting!*
