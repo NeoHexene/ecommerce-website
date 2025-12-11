@@ -2,18 +2,18 @@
 
 A full-stack e-commerce platform with secure payment processing, built using Angular, Spring Boot, and MySQL.
 
-## 🚀 Overview
+## Overview
 
 Enterprise-level e-commerce application featuring user authentication, product management, shopping cart, Razorpay payment integration, and admin dashboard. Demonstrates modern web architecture with complete frontend-backend separation.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Frontend:** Angular (TypeScript), RxJS, Angular Services  
 **Backend:** Spring Boot, Maven, Spring Security  
 **Database:** MySQL with Spring Data JPA, Hibernate, Lombok  
 **Integration:** Razorpay Payment Gateway, CORS Filter for API communication
 
-## ✨ Key Features
+## Key Features
 
 - User authentication with role-based access control
 - Dynamic product catalog with search and filters
@@ -22,7 +22,7 @@ Enterprise-level e-commerce application featuring user authentication, product m
 - Admin panel for product, order, and user management
 - RESTful API architecture with proper error handling
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 Angular SPA (Port 4200) ──HTTP──▶ Spring Boot REST API (Port 8080) ──JPA──▶ MySQL Database
@@ -32,7 +32,7 @@ Angular SPA (Port 4200) ──HTTP──▶ Spring Boot REST API (Port 8080) ─
 
 **Design Patterns:** MVC, Repository Pattern, Service Layer, DTO Pattern, Dependency Injection
 
-## 💡 Technical Highlights
+## Technical Highlights
 
 ### 1. CORS Configuration
 Implemented custom CORS filter in Spring Boot to handle cross-origin requests between frontend (4200) and backend (8080), allowing seamless API communication.
@@ -49,7 +49,7 @@ Designed complex relationships (Users, Products, Orders, OrderItems) using JPA a
 ### 4. Cart Persistence
 Persistent cart storage linked to user accounts with optimistic locking to handle concurrent updates and prevent data inconsistency.
 
-## 🚦 Quick Start
+## Quick Start
 
 ### Prerequisites
 Node.js, Java 11+, Maven 3.6+, MySQL 8.0+, Angular CLI
@@ -73,7 +73,7 @@ ng serve  # Runs on localhost:4200
 ### Configuration
 Update `application.properties` with MySQL and Razorpay credentials.
 
-## 🔐 Security
+## Security
 
 - Spring Security with BCrypt password encryption
 - JWT token-based authentication
@@ -81,16 +81,10 @@ Update `application.properties` with MySQL and Razorpay credentials.
 - SQL injection prevention via JPA
 - Payment signature verification
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - Product reviews and ratings
 - Email notifications
 - Advanced analytics dashboard
 - Coupon system
 - WebSocket for real-time inventory
-
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE) file
-
-**Built by [Aniruddha](https://github.com/NeoHexene)** | *Star ⭐ if you find this interesting!*
