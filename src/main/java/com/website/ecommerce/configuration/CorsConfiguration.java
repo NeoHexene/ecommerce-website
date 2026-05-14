@@ -1,16 +1,16 @@
 package com.website.ecommerce.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@RequiredArgsConstructor
 public class CorsConfiguration {
 
-    @Autowired
-    private EcommercePropertyConfiguration ecommercePropertyConfiguration;
+    private final EcommercePropertyConfiguration ecommercePropertyConfiguration;
 
     private static final String GET = "GET";
     private static final String POST = "POST";
@@ -18,12 +18,13 @@ public class CorsConfiguration {
     private static final String DELETE = "DELETE";
 
     @Bean
-    public WebMvcConfigurer corsConfigurer (){
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedMethods(GET, POST, PUT, DELETE)
-                        .allowedHeaders("*").allowedOrigins(ecommercePropertyConfiguration.getAllowedOrigins()).allowCredentials(true);
+                        .allowedHeaders("*").allowedOrigins(ecommercePropertyConfiguration.getAllowedOrigins())
+                        .allowCredentials(true);
             }
         };
     }

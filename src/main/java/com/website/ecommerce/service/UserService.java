@@ -22,17 +22,10 @@ import java.util.Set;
 @Slf4j
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private EcommercePropertyConfiguration ecommercePropertyConfiguration;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final EcommercePropertyConfiguration ecommercePropertyConfiguration;
+    private final PasswordEncoder passwordEncoder;
 
     private final JSONObject dataObject = new JSONObject();
 

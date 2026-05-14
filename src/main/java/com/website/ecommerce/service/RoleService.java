@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RoleService {
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     private final JSONObject dataObject = new JSONObject();
 

@@ -1,6 +1,6 @@
 package com.website.ecommerce.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,21 +21,16 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfiguration {
 
-    @Autowired
-    private EcommercePropertyConfiguration ecommercePropertyConfiguration;
-
-    @Autowired
-    private EcommerceJwtAuthenticationEntryPoint ecommerceJwtAuthenticationEntryPoint;
-
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+    private final EcommercePropertyConfiguration ecommercePropertyConfiguration;
+    private final EcommerceJwtAuthenticationEntryPoint ecommerceJwtAuthenticationEntryPoint;
+    private final JwtRequestFilter jwtRequestFilter;
 
     @Bean
-    public AuthenticationManager authenticationManagerBean
-            (AuthenticationConfiguration authenticationConfiguration)
-        throws Exception {
+    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -45,7 +40,8 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(ecommercePropertyConfiguration.getAllowedEndPoints()).permitAll()
-                        .anyRequest().authenticated()).formLogin(AbstractHttpConfigurer::disable)
+                        .anyRequest().authenticated())
+                .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(ecommerceJwtAuthenticationEntryPoint))
